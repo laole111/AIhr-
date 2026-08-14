@@ -57,6 +57,21 @@ body {
   z-index: 100; transition: opacity 0.15s;
 }
 .sidebar-item:hover .tooltip { opacity: 1; }
+/* 二级菜单弹出 */
+.sidebar-item.has-submenu { position: relative; }
+.sidebar-submenu {
+  position: absolute; left: 50px; top: 0; min-width: 160px;
+  background: #343848; display: none; z-index: 100;
+  box-shadow: 2px 0 8px rgba(0,0,0,0.3); border-radius: 0 3px 3px 0;
+}
+.sidebar-item.has-submenu.expanded .sidebar-submenu { display: block; }
+.sidebar-item.has-submenu.expanded .sidebar-bg { opacity: 1; background: #21242D; }
+.submenu-item {
+  padding: 10px 16px; color: #D7D7D7; font-size: 13px;
+  cursor: pointer; white-space: nowrap; transition: all 0.15s;
+}
+.submenu-item:hover { background: #21242D; color: #FFF; }
+.submenu-item.active { color: #5582F3; }
 .sidebar-bottom { flex-shrink: 0; }
 .sidebar-separator { width: 50px; height: 1px; background: rgba(255,255,255,0.2); }
 .sidebar-collapse { width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; cursor: pointer; }
@@ -421,6 +436,38 @@ body {
   color: #AAAAAA; cursor: pointer; line-height: 1; flex-shrink: 0;
 }
 .nav-tab-item .tab-close:hover { background: #F2F2F2; color: #FF4948; }
+/* 格子页签（计划信息/培训预算切换） */
+.grid-tabs { display: flex; height: 32px; border-bottom: 1px solid #D7D7D7; flex-shrink: 0; }
+.grid-tab { height: 32px; padding: 6px 16px; font-size: 13px; color: #555555; display: flex; align-items: center; cursor: pointer; background: #FFFFFF; border: 1px solid #D7D7D7; border-bottom: none; margin-right: -1px; }
+.grid-tab.active { background: #5F83EB; color: #FFFFFF; border-color: #5F83EB; }
+.grid-tab-panel { display: none; }
+.grid-tab-panel.active { display: block; }
+/* 汇总栏（预算合计行） */
+.summary-bar { height: 37px; background: rgba(250,205,145,0.498); display: flex; align-items: center; padding: 6px 18px; gap: 24px; font-size: 13px; color: #151515; border: 1px solid #D7D7D7; border-top: none; }
+.summary-bar .summary-label { font-size: 12px; color: #AAAAAA; }
+.summary-bar .summary-value { font-size: 14px; font-weight: 500; color: #ED8150; }
+/* 人员选择弹窗 */
+.modal-lg { width: 960px; }
+.person-picker { display: flex; height: 480px; }
+.picker-filter { width: 260px; flex-shrink: 0; border-right: 1px solid #D7D7D7; overflow-y: auto; padding: 12px; background: #FAFBFC; }
+.picker-filter .pf-label { font-size: 12px; color: #AAAAAA; margin-bottom: 4px; margin-top: 8px; }
+.picker-filter .pf-label:first-child { margin-top: 0; }
+.picker-filter select, .picker-filter input { height: 28px; border: 1px solid #D7D7D7; border-radius: 3px; font-size: 12px; padding: 4px 8px; width: 100%; background: #FFF; outline: none; font-family: inherit; }
+.picker-filter select { appearance: none; -webkit-appearance: none; padding-right: 24px; background: #FFF url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 10 10'%3E%3Cpath d='M1 3l4 4 4-4' stroke='%23ABABAB' stroke-width='1.2' fill='none'/%3E%3C/svg%3E") no-repeat right 8px center; }
+.picker-filter .pf-checkbox { display: flex; align-items: center; gap: 6px; margin-top: 8px; }
+.picker-filter .pf-checkbox input { width: 14px; height: 14px; accent-color: #5582F3; }
+.picker-filter .pf-checkbox span { font-size: 12px; color: #555; }
+.picker-result { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+.picker-search { display: flex; gap: 8px; padding: 10px 12px; border-bottom: 1px solid #F2F2F2; flex-shrink: 0; }
+.picker-search input { flex: 1; height: 28px; border: 1px solid #D7D7D7; border-radius: 3px; font-size: 13px; padding: 4px 8px; outline: none; font-family: inherit; }
+.picker-table-wrap { flex: 1; overflow: auto; }
+.picker-table { width: 100%; border-collapse: collapse; }
+.picker-table th { height: 36px; background: #F3F3F3; font-size: 12px; font-weight: 400; padding: 2px 8px; border-bottom: 1px solid #F2F2F2; text-align: left; color: #151515; position: sticky; top: 0; }
+.picker-table td { height: 36px; padding: 2px 8px; border-bottom: 1px solid #F2F2F2; font-size: 12px; color: #151515; }
+.picker-table tbody tr:hover td { background: #F2F6FE; }
+.picker-table .col-check { width: 36px; text-align: center; }
+.picker-table .col-check input { width: 14px; height: 14px; accent-color: #5582F3; }
+.picker-info { padding: 6px 12px; font-size: 12px; color: #5582F3; border-top: 1px solid #F2F2F2; flex-shrink: 0; background: #FAFBFC; }
 </style>
 </head>
 <body>
@@ -465,6 +512,41 @@ body {
           <svg width="16" height="20" viewBox="0 0 16 20"><path d="M2 0L11 0L16 5L16 19C16 19.55 15.55 20 15 20L2 20C1.45 20 1 19.55 1 19L1 1C1 0.45 1.45 0 2 0ZM11 0.5L11 5L15.5 5L11 0.5ZM3 8L13 8L13 9L3 9L3 8ZM3 11L13 11L13 12L3 12L3 11ZM3 14L9 14L9 15L3 15L3 14Z" fill="#D7D7D7"/></svg>
           <div class="tooltip">部门培训需求申请</div>
         </div>
+        <!-- 年度培训计划记录 -->
+        <div class="sidebar-item" data-page="annual-plan" onclick="switchPage('annual-plan', this)">
+          <div class="sidebar-bg"></div>
+          <svg width="16" height="16" viewBox="0 0 16 16"><path d="M2 2h12v12H2V2zm0 4h12M5 1v2M11 1v2M2 2h12M2 6h12" stroke="#D7D7D7" stroke-width="1.2" fill="none"/><rect x="4" y="8" width="2" height="2" fill="#D7D7D7"/><rect x="8" y="8" width="2" height="2" fill="#D7D7D7"/><rect x="4" y="11" width="2" height="2" fill="#D7D7D7"/></svg>
+          <div class="tooltip">年度培训计划记录</div>
+        </div>
+        <!-- 培训预算科目配置 -->
+        <div class="sidebar-item" data-page="budget-config" onclick="switchPage('budget-config', this)">
+          <div class="sidebar-bg"></div>
+          <svg width="16" height="16" viewBox="0 0 16 16"><path d="M8 10c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zM3.5 8c0-.3.03-.6.08-.9L2.05 6.1l1.5-2.6 1.72.6c.5-.4 1.05-.7 1.65-.9L7.3 1.4h3l.27 1.8c.6.2 1.15.5 1.65.9l1.72-.6 1.5 2.6-1.53 1c.05.3.08.6.08.9s-.03.6-.08.9l1.53 1-1.5 2.6-1.72-.6c-.5.4-1.05.7-1.65.9L10.3 14.6h-3l-.27-1.8c-.6-.2-1.15-.5-1.65-.9l-1.72.6-1.5-2.6 1.53-1c-.05-.3-.08-.6-.08-.9z" fill="#D7D7D7"/></svg>
+          <div class="tooltip">培训预算科目配置</div>
+        </div>
+        <!-- 培训立项（一级菜单，含二级菜单） -->
+        <div class="sidebar-item has-submenu" onclick="toggleSubmenu(this)">
+          <div class="sidebar-bg"></div>
+          <svg width="16" height="16" viewBox="0 0 16 16"><path d="M2 1.5L8 0l6 1.5V5c0 4.5-3 7.5-6 9-3-1.5-6-4.5-6-9V1.5zM8 2L3.5 3v2.2c0 3.5 2.2 5.8 4.5 7 2.3-1.2 4.5-3.5 4.5-7V3L8 2z" fill="#D7D7D7"/><path d="M5.5 6L7 7.5L10.5 4" stroke="#D7D7D7" stroke-width="1.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <div class="tooltip">培训立项</div>
+          <div class="sidebar-submenu">
+            <div class="submenu-item" onclick="event.stopPropagation(); switchPage('demand-project')">培训需求立项</div>
+            <div class="submenu-item" onclick="event.stopPropagation(); switchPage('plan-project')">培训计划立项</div>
+            <div class="submenu-item" onclick="event.stopPropagation(); switchPage('unplanned-project')">计划外培训立项</div>
+          </div>
+        </div>
+        <!-- 培训结果 -->
+        <div class="sidebar-item" data-page="employee-profile" onclick="switchPage('employee-profile', this)">
+          <div class="sidebar-bg"></div>
+          <svg width="16" height="16" viewBox="0 0 16 16"><path d="M8 0a4 4 0 100 8 4 4 0 000-8zm0 10c-4 0-8 2-8 6v0h16v0c0-4-4-6-8-6z" fill="#D7D7D7"/></svg>
+          <div class="tooltip">培训结果</div>
+        </div>
+        <!-- 考试结果 -->
+        <div class="sidebar-item" data-page="exam-result" onclick="switchPage('exam-result', this)">
+          <div class="sidebar-bg"></div>
+          <svg width="16" height="16" viewBox="0 0 16 16"><path d="M2 2h12v9H2V2zm0 9l3 3v-3H2z" stroke="#D7D7D7" stroke-width="1.2" fill="none"/><path d="M5 5h6M5 7h4" stroke="#D7D7D7" stroke-width="1.2" stroke-linecap="round"/></svg>
+          <div class="tooltip">考试结果</div>
+        </div>
       </div>
       <div class="sidebar-bottom">
         <div class="sidebar-separator"></div>
@@ -505,6 +587,48 @@ body {
                   </div>
                   <div class="quick-entry-label">培训需求申请</div>
                 </div>
+                <div class="quick-entry" onclick="switchPage('annual-plan')">
+                  <div class="quick-entry-icon" style="background:#DDEFFF;">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="16" rx="1" stroke="#108EE9" stroke-width="1.5"/><path d="M3 9h18M8 3v4M16 3v4" stroke="#108EE9" stroke-width="1.5"/><rect x="7" y="12" width="3" height="3" fill="#108EE9"/><rect x="12" y="12" width="3" height="3" fill="#108EE9"/></svg>
+                  </div>
+                  <div class="quick-entry-label">年度培训计划</div>
+                </div>
+                <div class="quick-entry" onclick="switchPage('budget-config')">
+                  <div class="quick-entry-icon" style="background:#DDEFFF;">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 15c1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3 1.34 3 3 3zM6.5 12c0-.5.04-1 .13-1.5L4 9l2.5-4.3 2.87 1c.83-.67 1.75-1.17 2.75-1.5L12.5 1.5h5l.38 2.7c1 .33 1.92.83 2.75 1.5l2.87-1L26 9l-2.63 1.5c.09.5.13 1 .13 1.5s-.04 1-.13 1.5L26 15l-2.5 4.3-2.87-1c-.83.67-1.75 1.17-2.75 1.5l-.38 2.7h-5l-.38-2.7c-1-.33-1.92-.83-2.75-1.5l-2.87 1L4 15l2.63-1.5c-.09-.5-.13-1-.13-1.5z" fill="#108EE9"/></svg>
+                  </div>
+                  <div class="quick-entry-label">预算科目配置</div>
+                </div>
+                <div class="quick-entry" onclick="switchPage('demand-project')">
+                  <div class="quick-entry-icon" style="background:#DDEFFF;">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M4 3h16v4H4zM4 10h16v4H4zM4 17h10v4H4z" fill="#108EE9"/><circle cx="7" cy="5" r="1.5" fill="#FFF"/><circle cx="7" cy="12" r="1.5" fill="#FFF"/></svg>
+                  </div>
+                  <div class="quick-entry-label">培训需求立项</div>
+                </div>
+                <div class="quick-entry" onclick="switchPage('plan-project')">
+                  <div class="quick-entry-icon" style="background:#DDEFFF;">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="16" rx="1" stroke="#108EE9" stroke-width="1.5"/><path d="M3 9h18M8 3v4M16 3v4" stroke="#108EE9" stroke-width="1.5"/><rect x="7" y="12" width="3" height="3" fill="#108EE9"/><rect x="12" y="12" width="3" height="3" fill="#108EE9"/></svg>
+                  </div>
+                  <div class="quick-entry-label">培训计划立项</div>
+                </div>
+                <div class="quick-entry" onclick="switchPage('unplanned-project')">
+                  <div class="quick-entry-icon" style="background:#DDEFFF;">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 2L3 7v10l9 5 9-5V7l-9-5z" stroke="#108EE9" stroke-width="1.5" fill="none"/><path d="M8 12l3 3 5-5" stroke="#108EE9" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </div>
+                  <div class="quick-entry-label">计划外培训立项</div>
+                </div>
+                <div class="quick-entry" onclick="switchPage('employee-profile')">
+                  <div class="quick-entry-icon" style="background:#DDEFFF;">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="7" r="4" fill="#108EE9"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7" fill="#108EE9"/></svg>
+                  </div>
+                  <div class="quick-entry-label">培训结果管理</div>
+                </div>
+                <div class="quick-entry" onclick="switchPage('exam-result')">
+                  <div class="quick-entry-icon" style="background:#DDEFFF;">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="14" rx="1" stroke="#108EE9" stroke-width="1.5"/><path d="M6 14l3-3 2 2 4-5" stroke="#108EE9" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M7 21h10" stroke="#108EE9" stroke-width="1.5" stroke-linecap="round"/></svg>
+                  </div>
+                  <div class="quick-entry-label">考试结果</div>
+                </div>
                 <div class="quick-add" onclick="showToast('添加快捷功能（原型演示）')">
                   <div class="quick-add-box">+</div>
                   <div class="quick-add-label">添加</div>
@@ -543,7 +667,7 @@ body {
         <!-- 工具栏 -->
         <div class="list-toolbar">
           <div class="toolbar-left">
-            <button class="btn btn-primary" onclick="goToEdit('plan')">+ 新增</button>
+            <button class="btn btn-primary" onclick="newRecord('plan')">+ 新增</button>
             <button class="btn btn-secondary">复制</button>
             <button class="btn btn-secondary">删除</button>
             <div class="toolbar-divider"></div>
@@ -556,11 +680,11 @@ body {
         <div class="list-scroll">
           <!-- 分页栏：左条数 / 右翻页 -->
           <div class="list-page-bar">
-            <div class="lpb-left">共 156 条</div>
+            <div class="lpb-left">共 7 条</div>
             <div class="lpb-right">
               <button class="page-btn">&lt;</button>
               <input class="page-input" value="1">
-              <span class="page-info">/ 8 页</span>
+              <span class="page-info">/ 1 页</span>
               <button class="page-btn">&gt;</button>
               <span class="page-size">20条/页</span>
             </div>
@@ -582,7 +706,7 @@ body {
               <tbody>
                 <tr>
                   <td class="col-checkbox"><input type="checkbox"></td>
-                  <td><span class="link-cell" onclick="goToEdit('plan')">10001</span></td>
+                  <td><span class="link-cell" onclick="goToEdit('plan',false,0)">10001</span></td>
                   <td>2026年新员工必修培训方案</td>
                   <td>10 - 必修培训</td>
                   <td><span class="status-tag active">已生效</span></td>
@@ -590,11 +714,11 @@ body {
                   <td>金蝶软件（中国）</td>
                   <td>李明</td>
                   <td>2025-12-15 10:32</td>
-                  <td class="col-action"><a class="btn-text" style="font-size:12px;" onclick="goToEdit('plan')">编辑</a></td>
+                  <td class="col-action"><a class="btn-text" style="font-size:12px;" onclick="goToEdit('plan',false,0)">编辑</a></td>
                 </tr>
                 <tr>
                   <td class="col-checkbox"><input type="checkbox"></td>
-                  <td><span class="link-cell" onclick="goToEdit('plan')">10002</span></td>
+                  <td><span class="link-cell" onclick="goToEdit('plan',false,1)">10002</span></td>
                   <td>产品经理能力提升培训方案</td>
                   <td>10 - 必修培训</td>
                   <td><span class="status-tag active">已生效</span></td>
@@ -602,11 +726,11 @@ body {
                   <td>金蝶软件（中国）</td>
                   <td>王芳</td>
                   <td>2026-02-20 14:18</td>
-                  <td class="col-action"><a class="btn-text" style="font-size:12px;" onclick="goToEdit('plan')">编辑</a></td>
+                  <td class="col-action"><a class="btn-text" style="font-size:12px;" onclick="goToEdit('plan',false,1)">编辑</a></td>
                 </tr>
                 <tr>
                   <td class="col-checkbox"><input type="checkbox"></td>
-                  <td><span class="link-cell" onclick="goToEdit('plan')">10003</span></td>
+                  <td><span class="link-cell" onclick="goToEdit('plan',false,2)">10003</span></td>
                   <td>新员工入职线下培训方案</td>
                   <td>11 - 新员工培训线下</td>
                   <td><span class="status-tag active">已生效</span></td>
@@ -614,11 +738,11 @@ body {
                   <td>金蝶医疗、金蝶中间件</td>
                   <td>张伟</td>
                   <td>2025-12-28 09:05</td>
-                  <td class="col-action"><a class="btn-text" style="font-size:12px;" onclick="goToEdit('plan')">编辑</a></td>
+                  <td class="col-action"><a class="btn-text" style="font-size:12px;" onclick="goToEdit('plan',false,2)">编辑</a></td>
                 </tr>
                 <tr>
                   <td class="col-checkbox"><input type="checkbox"></td>
-                  <td><span class="link-cell" onclick="goToEdit('plan')">10004</span></td>
+                  <td><span class="link-cell" onclick="goToEdit('plan',false,3)">10004</span></td>
                   <td>苍穹平台开发认证培训方案</td>
                   <td>10 - 必修培训</td>
                   <td><span class="status-tag draft">草稿</span></td>
@@ -626,11 +750,11 @@ body {
                   <td>金蝶软件（中国）</td>
                   <td>陈静</td>
                   <td>2026-04-10 16:42</td>
-                  <td class="col-action"><a class="btn-text" style="font-size:12px;" onclick="goToEdit('plan')">编辑</a></td>
+                  <td class="col-action"><a class="btn-text" style="font-size:12px;" onclick="goToEdit('plan',false,3)">编辑</a></td>
                 </tr>
                 <tr>
                   <td class="col-checkbox"><input type="checkbox"></td>
-                  <td><span class="link-cell" onclick="goToEdit('plan')">10005</span></td>
+                  <td><span class="link-cell" onclick="goToEdit('plan',false,4)">10005</span></td>
                   <td>信息安全意识必修培训</td>
                   <td>10 - 必修培训</td>
                   <td><span class="status-tag inactive">已失效</span></td>
@@ -638,11 +762,11 @@ body {
                   <td>金蝶软件（中国）</td>
                   <td>刘强</td>
                   <td>2025-06-15 11:20</td>
-                  <td class="col-action"><a class="btn-text" style="font-size:12px;" onclick="goToEdit('plan')">编辑</a></td>
+                  <td class="col-action"><a class="btn-text" style="font-size:12px;" onclick="goToEdit('plan',false,4)">编辑</a></td>
                 </tr>
                 <tr>
                   <td class="col-checkbox"><input type="checkbox"></td>
-                  <td><span class="link-cell" onclick="goToEdit('plan')">10006</span></td>
+                  <td><span class="link-cell" onclick="goToEdit('plan',false,5)">10006</span></td>
                   <td>中层管理干部沙盘培训方案</td>
                   <td>10 - 必修培训</td>
                   <td><span class="status-tag active">已生效</span></td>
@@ -650,11 +774,11 @@ body {
                   <td>金蝶软件（中国）</td>
                   <td>赵敏</td>
                   <td>2026-03-05 08:50</td>
-                  <td class="col-action"><a class="btn-text" style="font-size:12px;" onclick="goToEdit('plan')">编辑</a></td>
+                  <td class="col-action"><a class="btn-text" style="font-size:12px;" onclick="goToEdit('plan',false,5)">编辑</a></td>
                 </tr>
                 <tr>
                   <td class="col-checkbox"><input type="checkbox"></td>
-                  <td><span class="link-cell" onclick="goToEdit('plan')">10007</span></td>
+                  <td><span class="link-cell" onclick="goToEdit('plan',false,6)">10007</span></td>
                   <td>敏捷开发实战培训方案</td>
                   <td>11 - 新员工培训线下</td>
                   <td><span class="status-tag draft">草稿</span></td>
@@ -662,7 +786,7 @@ body {
                   <td>金蝶天燕云计算</td>
                   <td>孙丽</td>
                   <td>2026-07-18 13:15</td>
-                  <td class="col-action"><a class="btn-text" style="font-size:12px;" onclick="goToEdit('plan')">编辑</a></td>
+                  <td class="col-action"><a class="btn-text" style="font-size:12px;" onclick="goToEdit('plan',false,6)">编辑</a></td>
                 </tr>
               </tbody>
             </table>
@@ -681,7 +805,7 @@ body {
         <!-- 操作栏 -->
         <div class="action-bar">
           <button class="btn btn-primary" onclick="showToast('学习方案已保存（原型演示）')">保存</button>
-          <button class="btn btn-secondary" onclick="showToast('已取消')">取消</button>
+
           <button class="btn btn-text" onclick="showToast('已提交')">提交</button>
         </div>
 
@@ -709,23 +833,23 @@ body {
                 </div>
                 <div class="form-field full">
                   <label>培训方案名称<span class="required">*</span></label>
-                  <input class="input-box" type="text" placeholder="请输入培训方案名称" maxlength="100">
+                  <input class="input-box" type="text" placeholder="请输入培训方案名称" maxlength="100" value="2026年新员工必修培训方案" data-field="name">
                 </div>
                 <div class="form-field full">
                   <label>培训方案简介</label>
-                  <textarea class="input-box" placeholder="请输入方案简介"></textarea>
+                  <textarea class="input-box" placeholder="请输入方案简介" data-field="intro">面向2026年入职的新员工，涵盖苍穹平台基础、开发规范、信息安全等必修课程，帮助新员工快速融入团队。</textarea>
                 </div>
                 <div class="form-field">
                   <label>培训方案分类</label>
-                  <select class="input-box">
+                  <select class="input-box" data-field="category">
                     <option value="">请选择</option>
-                    <option value="10">10 - 必修培训</option>
+                    <option value="10" selected>10 - 必修培训</option>
                     <option value="11">11 - 新员工培训线下</option>
                   </select>
                 </div>
                 <div class="form-field">
                   <label>状态</label>
-                  <select class="input-box">
+                  <select class="input-box" data-field="status">
                     <option value="draft">草稿</option>
                     <option value="active" selected>已生效</option>
                     <option value="inactive">已失效</option>
@@ -734,7 +858,7 @@ body {
                 <div class="form-field">
                   <label>生效日期</label>
                   <div class="date-box">
-                    <input class="input-box" type="text" placeholder="请选择日期" id="kd-plan-date" readonly onclick="openDatePicker('kd-plan-date')">
+                    <input class="input-box" type="text" placeholder="请选择日期" id="kd-plan-date" value="2026-01-01" readonly data-field="date" onclick="openDatePicker('kd-plan-date')">
                     <span class="date-icon" onclick="openDatePicker('kd-plan-date')">
                       <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1" y="2.5" width="12" height="10.5" rx="1" stroke="currentColor" stroke-width="1"/><path d="M3.5 1v3M10.5 1v3M1 5.5h12" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg>
                     </span>
@@ -792,7 +916,7 @@ body {
                   <label>配置维度<span class="required">*</span></label>
                   <select class="input-box" id="kd-dim-select" onchange="onDimChange()">
                     <option value="">请选择配置维度</option>
-                    <option value="dept">部门</option>
+                    <option value="dept" selected>部门</option>
                     <option value="post">岗位</option>
                     <option value="system">体系</option>
                     <option value="business">业务</option>
@@ -903,7 +1027,7 @@ body {
         <!-- 工具栏 -->
         <div class="list-toolbar">
           <div class="toolbar-left">
-            <button class="btn btn-primary" onclick="goToEdit('demand')">+ 新增</button>
+            <button class="btn btn-primary" onclick="newRecord('demand')">+ 新增</button>
             <button class="btn btn-secondary">删除</button>
             <div class="toolbar-divider"></div>
             <button class="btn btn-secondary">导出</button>
@@ -914,11 +1038,11 @@ body {
         <div class="list-scroll">
           <!-- 分页栏：左条数 / 右翻页 -->
           <div class="list-page-bar">
-            <div class="lpb-left">共 89 条</div>
+            <div class="lpb-left">共 7 条</div>
             <div class="lpb-right">
               <button class="page-btn">&lt;</button>
               <input class="page-input" value="1">
-              <span class="page-info">/ 5 页</span>
+              <span class="page-info">/ 1 页</span>
               <button class="page-btn">&gt;</button>
               <span class="page-size">20条/页</span>
             </div>
@@ -935,12 +1059,13 @@ body {
                 <th>所属部门</th>
                 <th>申请人</th>
                 <th>状态</th>
+                <th>立项状态</th>
                 <th class="col-action">操作</th>
               </tr></thead>
               <tbody>
                 <tr>
                   <td class="col-checkbox"><input type="checkbox"></td>
-                  <td><span class="link-cell" onclick="goToEdit('demand')">TRN-20260812-0001</span></td>
+                  <td><span class="link-cell" onclick="goToEdit('demand',false,0)">TRN-20260812-0001</span></td>
                   <td>苍穹平台开发实战培训</td>
                   <td>内部讲师内训</td>
                   <td>2026年9月</td>
@@ -948,11 +1073,12 @@ body {
                   <td>产品研发中心</td>
                   <td>王雪儿</td>
                   <td><span class="status-tag pending">待审批</span></td>
-                  <td class="col-action"><a class="btn-text" style="font-size:12px;" onclick="goToEdit('demand')">编辑</a></td>
+                  <td><span class="status-tag approved">已立项</span></td>
+                  <td class="col-action"><a class="btn-text" style="font-size:12px;" onclick="goToEdit('demand',false,0)">编辑</a> <span style="font-size:12px;color:#33CC00;">已立项</span></td>
                 </tr>
                 <tr>
                   <td class="col-checkbox"><input type="checkbox"></td>
-                  <td><span class="link-cell" onclick="goToEdit('demand')">TRN-20260810-0007</span></td>
+                  <td><span class="link-cell" onclick="goToEdit('demand',false,1)">TRN-20260810-0007</span></td>
                   <td>PMP项目管理认证培训</td>
                   <td>外训</td>
                   <td>2026年10月</td>
@@ -960,11 +1086,12 @@ body {
                   <td>项目管理部</td>
                   <td>李明</td>
                   <td><span class="status-tag approved">已通过</span></td>
-                  <td class="col-action"><a class="btn-text" style="font-size:12px;" onclick="goToEdit('demand')">查看</a></td>
+                  <td><span class="status-tag approved">已立项</span></td>
+                  <td class="col-action"><a class="btn-text" style="font-size:12px;" onclick="goToEdit('demand',false,1)">查看</a> <span style="font-size:12px;color:#33CC00;">已立项</span></td>
                 </tr>
                 <tr>
                   <td class="col-checkbox"><input type="checkbox"></td>
-                  <td><span class="link-cell" onclick="goToEdit('demand')">TRN-20260808-0012</span></td>
+                  <td><span class="link-cell" onclick="goToEdit('demand',false,2)">TRN-20260808-0012</span></td>
                   <td>新员工入职培训需求</td>
                   <td>内部讲师内训</td>
                   <td>2026年9月</td>
@@ -972,11 +1099,12 @@ body {
                   <td>人力资源中心</td>
                   <td>张伟</td>
                   <td><span class="status-tag approved">已通过</span></td>
-                  <td class="col-action"><a class="btn-text" style="font-size:12px;" onclick="goToEdit('demand')">查看</a></td>
+                  <td><span class="status-tag approved">已立项</span></td>
+                  <td class="col-action"><a class="btn-text" style="font-size:12px;" onclick="goToEdit('demand',false,2)">查看</a> <span style="font-size:12px;color:#33CC00;">已立项</span></td>
                 </tr>
                 <tr>
                   <td class="col-checkbox"><input type="checkbox"></td>
-                  <td><span class="link-cell" onclick="goToEdit('demand')">TRN-20260805-0023</span></td>
+                  <td><span class="link-cell" onclick="goToEdit('demand',false,3)">TRN-20260805-0023</span></td>
                   <td>前端技术能力提升培训</td>
                   <td>外部讲师内训</td>
                   <td>2026年11月</td>
@@ -984,11 +1112,12 @@ body {
                   <td>基础平台部</td>
                   <td>陈静</td>
                   <td><span class="status-tag pending">待审批</span></td>
-                  <td class="col-action"><a class="btn-text" style="font-size:12px;" onclick="goToEdit('demand')">编辑</a></td>
+                  <td><span class="status-tag pending">未立项</span></td>
+                  <td class="col-action"><a class="btn-text" style="font-size:12px;" onclick="goToEdit('demand',false,3)">编辑</a> <a class="btn-text" style="font-size:12px;" onclick="goToProjectEdit('demand')">培训立项</a></td>
                 </tr>
                 <tr>
                   <td class="col-checkbox"><input type="checkbox"></td>
-                  <td><span class="link-cell" onclick="goToEdit('demand')">TRN-20260801-0035</span></td>
+                  <td><span class="link-cell" onclick="goToEdit('demand',false,4)">TRN-20260801-0035</span></td>
                   <td>信息安全合规培训</td>
                   <td>内部讲师内训</td>
                   <td>2026年10月</td>
@@ -996,11 +1125,12 @@ body {
                   <td>信息安全部</td>
                   <td>刘强</td>
                   <td><span class="status-tag rejected">已驳回</span></td>
-                  <td class="col-action"><a class="btn-text" style="font-size:12px;" onclick="goToEdit('demand')">编辑</a></td>
+                  <td><span class="status-tag pending">未立项</span></td>
+                  <td class="col-action"><a class="btn-text" style="font-size:12px;" onclick="goToEdit('demand',false,4)">编辑</a> <a class="btn-text" style="font-size:12px;" onclick="goToProjectEdit('demand')">培训立项</a></td>
                 </tr>
                 <tr>
                   <td class="col-checkbox"><input type="checkbox"></td>
-                  <td><span class="link-cell" onclick="goToEdit('demand')">TRN-20260728-0041</span></td>
+                  <td><span class="link-cell" onclick="goToEdit('demand',false,5)">TRN-20260728-0041</span></td>
                   <td>中层管理干部沙盘演练</td>
                   <td>外部讲师内训</td>
                   <td>2026年12月</td>
@@ -1008,11 +1138,12 @@ body {
                   <td>总经理办公室</td>
                   <td>赵敏</td>
                   <td><span class="status-tag approved">已通过</span></td>
-                  <td class="col-action"><a class="btn-text" style="font-size:12px;" onclick="goToEdit('demand')">查看</a></td>
+                  <td><span class="status-tag pending">未立项</span></td>
+                  <td class="col-action"><a class="btn-text" style="font-size:12px;" onclick="goToEdit('demand',false,5)">查看</a> <a class="btn-text" style="font-size:12px;" onclick="goToProjectEdit('demand')">培训立项</a></td>
                 </tr>
                 <tr>
                   <td class="col-checkbox"><input type="checkbox"></td>
-                  <td><span class="link-cell" onclick="goToEdit('demand')">TRN-20260720-0056</span></td>
+                  <td><span class="link-cell" onclick="goToEdit('demand',false,6)">TRN-20260720-0056</span></td>
                   <td>敏捷开发实战工作坊</td>
                   <td>外部讲师内训</td>
                   <td>2026年11月</td>
@@ -1020,7 +1151,8 @@ body {
                   <td>应用产品部</td>
                   <td>孙丽</td>
                   <td><span class="status-tag pending">待审批</span></td>
-                  <td class="col-action"><a class="btn-text" style="font-size:12px;" onclick="goToEdit('demand')">编辑</a></td>
+                  <td><span class="status-tag pending">未立项</span></td>
+                  <td class="col-action"><a class="btn-text" style="font-size:12px;" onclick="goToEdit('demand',false,6)">编辑</a> <a class="btn-text" style="font-size:12px;" onclick="goToProjectEdit('demand')">培训立项</a></td>
                 </tr>
               </tbody>
             </table>
@@ -1039,7 +1171,7 @@ body {
         <!-- 操作栏 -->
         <div class="action-bar">
           <button class="btn btn-primary" onclick="showToast('培训需求已提交，进入审批流程（原型演示）')">提交</button>
-          <button class="btn btn-secondary" onclick="showToast('已取消')">取消</button>
+
           <button class="btn btn-text" onclick="showToast('草稿已保存')">存草稿</button>
         </div>
 
@@ -1083,40 +1215,40 @@ body {
               <div class="form-grid">
                 <div class="form-field full">
                   <label>培训项目名称<span class="required">*</span></label>
-                  <input class="input-box" type="text" placeholder="请输入培训项目或课程名称" maxlength="100">
+                  <input class="input-box" type="text" placeholder="请输入培训项目或课程名称" maxlength="100" value="苍穹平台开发实战培训" data-field="name">
                 </div>
                 <div class="form-field">
                   <label>培训类型</label>
-                  <select class="input-box"><option value="">请选择</option><option value="external">外训</option><option value="internal-teacher">内部讲师内训</option><option value="external-teacher">外部讲师内训</option></select>
+                  <select class="input-box" data-field="type"><option value="">请选择</option><option value="external">外训</option><option value="internal-teacher" selected>内部讲师内训</option><option value="external-teacher">外部讲师内训</option></select>
                 </div>
                 <div class="form-field">
                   <label>培训项目类型</label>
                   <div class="lookup-box">
-                    <input class="input-box" type="text" placeholder="点击放大镜选择" readonly id="kd-proj-type" onclick="openLookup('kd-proj-type','培训项目类型')">
+                    <input class="input-box" type="text" placeholder="点击放大镜选择" value="T01 - 技术类培训" readonly id="kd-proj-type" data-field="projType" onclick="openLookup('kd-proj-type','培训项目类型')">
                     <span class="lookup-icon" onclick="openLookup('kd-proj-type','培训项目类型')">🔍</span>
                   </div>
                 </div>
                 <div class="form-field">
                   <label>培训项目子类</label>
                   <div class="lookup-box">
-                    <input class="input-box" type="text" placeholder="点击放大镜选择" readonly id="kd-proj-sub" onclick="openLookup('kd-proj-sub','培训项目子类')">
+                    <input class="input-box" type="text" placeholder="点击放大镜选择" value="ST01 - 前端技术" readonly id="kd-proj-sub" data-field="projSub" onclick="openLookup('kd-proj-sub','培训项目子类')">
                     <span class="lookup-icon" onclick="openLookup('kd-proj-sub','培训项目子类')">🔍</span>
                   </div>
                 </div>
                 <div class="form-field">
                   <label>需求时间</label>
                   <div class="lookup-box">
-                    <input class="input-box" type="text" placeholder="选择预计培训执行期间月份" readonly id="kd-need-time" onclick="openLookup('kd-need-time','需求时间')">
+                    <input class="input-box" type="text" placeholder="选择预计培训执行期间月份" value="2026年9月" readonly id="kd-need-time" data-field="needTime" onclick="openLookup('kd-need-time','需求时间')">
                     <span class="lookup-icon" onclick="openLookup('kd-need-time','需求时间')">🔍</span>
                   </div>
                 </div>
-                <div class="form-field"><label>培训地点</label><input class="input-box" type="text" placeholder="请输入培训详细地址" maxlength="100"></div>
-                <div class="form-field"><label>讲师</label><input class="input-box" type="text" placeholder="请输入培训讲师" maxlength="100"></div>
-                <div class="form-field"><label>培训课时（小时）</label><input class="input-box" type="text" placeholder="请输入培训课时" maxlength="100"></div>
-                <div class="form-field full"><label>培训内容</label><textarea class="input-box" placeholder="请输入培训包含的内容" maxlength="254"></textarea><span class="field-hint tip">基于问题的描述</span></div>
-                <div class="form-field full"><label>培训目标</label><textarea class="input-box" placeholder="请输入培训目标" maxlength="254"></textarea><span class="field-hint tip">基于未来达到什么效果的描述</span></div>
-                <div class="form-field full"><label>参训人员范围</label><textarea class="input-box" placeholder="请输入参训学员范围" maxlength="254"></textarea></div>
-                <div class="form-field full"><label>培训效果转化方式</label><textarea class="input-box" placeholder="请输入培训效果转化方式" maxlength="254"></textarea></div>
+                <div class="form-field"><label>培训地点</label><input class="input-box" type="text" placeholder="请输入培训详细地址" maxlength="100" value="深圳市南山区科技园金蝶大厦3楼培训室" data-field="place"></div>
+                <div class="form-field"><label>讲师</label><input class="input-box" type="text" placeholder="请输入培训讲师" maxlength="100" value="张明、李芳" data-field="teacher"></div>
+                <div class="form-field"><label>培训课时（小时）</label><input class="input-box" type="text" placeholder="请输入培训课时" maxlength="100" value="16" data-field="hours"></div>
+                <div class="form-field full"><label>培训内容</label><textarea class="input-box" placeholder="请输入培训包含的内容" maxlength="254" data-field="content">苍穹平台开发基础、开发规范与最佳实践、数据建模与API设计、开发实战演练</textarea><span class="field-hint tip">基于问题的描述</span></div>
+                <div class="form-field full"><label>培训目标</label><textarea class="input-box" placeholder="请输入培训目标" maxlength="254" data-field="target">掌握苍穹平台开发技能，能独立完成标准业务模块开发，理解苍穹开发规范</textarea><span class="field-hint tip">基于未来达到什么效果的描述</span></div>
+                <div class="form-field full"><label>参训人员范围</label><textarea class="input-box" placeholder="请输入参训学员范围" maxlength="254" data-field="scope">产品研发中心后端开发工程师、前端开发工程师，共45人</textarea></div>
+                <div class="form-field full"><label>培训效果转化方式</label><textarea class="input-box" placeholder="请输入培训效果转化方式" maxlength="254" data-field="transform">培训后完成1个实战项目，由导师评审，通过后纳入项目组</textarea></div>
 
                 <div class="form-field full">
                   <label>上岗取证</label>
@@ -1151,12 +1283,12 @@ body {
                   <label class="kd-checkbox" style="margin-top:8px;"><input type="checkbox" id="kd-supplier-other" onchange="toggleSupplierOther()"><span class="cb-text">其他（手动维护）</span></label>
                   <input class="input-box" type="text" placeholder="手动维护供应商名称" id="kd-supplier-other-input" style="display:none; margin-top:8px;" maxlength="100">
                 </div>
-                <div class="form-field"><label>备注</label><input class="input-box" type="text" placeholder="请输入备注" maxlength="100"></div>
+                <div class="form-field"><label>备注</label><input class="input-box" type="text" placeholder="请输入备注" maxlength="100" value="需准备开发环境" data-field="remark"></div>
                 <div class="form-field">
                   <label>培训费用（元）</label>
                   <div class="amount-box">
                     <span class="amt-prefix">¥</span>
-                    <input class="input-box" type="number" placeholder="0.00" min="0" step="0.01">
+                    <input class="input-box" type="number" placeholder="0.00" min="0" step="0.01" value="5000.00" data-field="fee">
                     <span class="amt-suffix">元</span>
                   </div>
                 </div>
@@ -1191,6 +1323,785 @@ body {
 
         </div><!-- /scroll-area -->
       </div><!-- /page-demand-edit -->
+
+      <!-- ========== 年度培训计划记录 - 列表页 ========== -->
+      <div class="page-content" id="page-annual-plan-list">
+        <div class="filter-panel">
+          <div class="filter-row">
+            <span class="filter-label">日历年</span>
+            <input class="filter-input" type="text" placeholder="如 2026" style="width:100px;">
+            <span class="filter-label">公司</span>
+            <input class="filter-input" type="text" placeholder="请输入" style="width:180px;">
+            <span class="filter-label">培训类型</span>
+            <select class="filter-input select-style" style="width:140px;"><option value="">全部</option><option>10-外训</option><option>11-内部讲师内训</option><option>12-外聘讲师内训</option></select>
+            <span class="filter-label">立项状态</span>
+            <select class="filter-input select-style" style="width:120px;"><option value="">全部</option><option>未立项</option><option>已立项</option></select>
+            <button class="btn btn-primary" style="margin-left:auto;">查询</button>
+            <button class="btn btn-secondary">重置</button>
+          </div>
+        </div>
+        <div class="list-toolbar">
+          <div class="toolbar-left">
+            <button class="btn btn-primary" onclick="newRecord('annual-plan')">+ 新增</button>
+            <button class="btn btn-secondary">复制</button>
+            <button class="btn btn-secondary">删除</button>
+            <div class="toolbar-divider"></div>
+            <button class="btn btn-secondary">导入</button>
+            <button class="btn btn-secondary">导出</button>
+            <button class="btn btn-secondary">刷新</button>
+            <div class="toolbar-divider"></div>
+            <button class="btn btn-secondary" onclick="lockPlan(true)">🔒 锁定</button>
+            <button class="btn btn-secondary" onclick="lockPlan(false)">🔓 解锁</button>
+          </div>
+        </div>
+        <div class="list-scroll">
+          <div class="list-page-bar">
+            <div class="lpb-left">共 7 条</div>
+            <div class="lpb-right">
+              <button class="page-btn">&lt;</button><input class="page-input" value="1"><span class="page-info">/ 1 页</span><button class="page-btn">&gt;</button><span class="page-size">20条/页</span>
+            </div>
+          </div>
+          <div class="table-container">
+            <table class="data-table">
+              <thead><tr><th class="col-checkbox"><input type="checkbox"></th><th>日历年</th><th>公司</th><th>培训项目</th><th>培训类型</th><th>培训级别</th><th>计划人数</th><th>计划月份</th><th>培训课时</th><th>立项状态</th><th>锁定状态</th><th class="col-action">操作</th></tr></thead>
+              <tbody>
+                <tr><td class="col-checkbox"><input type="checkbox"></td><td><span class="link-cell" onclick="goToEdit('annual-plan',true,0)">2026</span></td><td>金蝶软件（中国）</td><td>苍穹平台开发实战培训</td><td>11-内部讲师内训</td><td>10-集团级</td><td>45</td><td>2026年9月</td><td>16</td><td><span class="status-tag approved">已立项</span></td><td><span class="status-tag active">已锁定</span></td><td class="col-action"><a class="btn-text" style="font-size:12px;" onclick="goToEdit('annual-plan',true,0)">查看</a> <span style="font-size:12px;color:#33CC00;">已立项</span></td></tr>
+                <tr><td class="col-checkbox"><input type="checkbox"></td><td><span class="link-cell" onclick="goToEdit('annual-plan',true,1)">2026</span></td><td>金蝶软件（中国）</td><td>PMP项目管理认证培训</td><td>10-外训</td><td>11-公司级</td><td>20</td><td>2026年10月</td><td>24</td><td><span class="status-tag approved">已立项</span></td><td><span class="status-tag active">已锁定</span></td><td class="col-action"><a class="btn-text" style="font-size:12px;" onclick="goToEdit('annual-plan',true,1)">查看</a> <span style="font-size:12px;color:#33CC00;">已立项</span></td></tr>
+                <tr><td class="col-checkbox"><input type="checkbox"></td><td><span class="link-cell" onclick="goToEdit('annual-plan',false,2)">2026</span></td><td>金蝶医疗软件</td><td>新员工入职培训</td><td>11-内部讲师内训</td><td>12-部门级</td><td>30</td><td>2026年9月</td><td>8</td><td><span class="status-tag pending">未立项</span></td><td><span class="status-tag draft">未锁定</span></td><td class="col-action"><a class="btn-text" style="font-size:12px;" onclick="goToEdit('annual-plan',false,2)">编辑</a> <a class="btn-text" style="font-size:12px;" onclick="goToProjectEdit('plan')">培训立项</a></td></tr>
+                <tr><td class="col-checkbox"><input type="checkbox"></td><td><span class="link-cell" onclick="goToEdit('annual-plan',true,3)">2026</span></td><td>金蝶软件（中国）</td><td>中层管理干部沙盘演练</td><td>12-外聘讲师内训</td><td>10-集团级</td><td>15</td><td>2026年12月</td><td>32</td><td><span class="status-tag approved">已立项</span></td><td><span class="status-tag active">已锁定</span></td><td class="col-action"><a class="btn-text" style="font-size:12px;" onclick="goToEdit('annual-plan',true,3)">查看</a> <span style="font-size:12px;color:#33CC00;">已立项</span></td></tr>
+                <tr><td class="col-checkbox"><input type="checkbox"></td><td><span class="link-cell" onclick="goToEdit('annual-plan',false,4)">2026</span></td><td>金蝶中间件</td><td>前端技术能力提升</td><td>12-外聘讲师内训</td><td>11-公司级</td><td>18</td><td>2026年11月</td><td>16</td><td><span class="status-tag pending">未立项</span></td><td><span class="status-tag draft">未锁定</span></td><td class="col-action"><a class="btn-text" style="font-size:12px;" onclick="goToEdit('annual-plan',false,4)">编辑</a> <a class="btn-text" style="font-size:12px;" onclick="goToProjectEdit('plan')">培训立项</a></td></tr>
+                <tr><td class="col-checkbox"><input type="checkbox"></td><td><span class="link-cell" onclick="goToEdit('annual-plan',false,5)">2026</span></td><td>金蝶软件（中国）</td><td>信息安全合规培训</td><td>11-内部讲师内训</td><td>11-公司级</td><td>50</td><td>2026年10月</td><td>4</td><td><span class="status-tag approved">已立项</span></td><td><span class="status-tag draft">未锁定</span></td><td class="col-action"><a class="btn-text" style="font-size:12px;" onclick="goToEdit('annual-plan',false,5)">查看</a> <span style="font-size:12px;color:#33CC00;">已立项</span></td></tr>
+                <tr><td class="col-checkbox"><input type="checkbox"></td><td><span class="link-cell" onclick="goToEdit('annual-plan',false,6)">2026</span></td><td>金蝶天燕云计算</td><td>敏捷开发实战培训</td><td>12-外聘讲师内训</td><td>12-部门级</td><td>12</td><td>2026年11月</td><td>16</td><td><span class="status-tag pending">未立项</span></td><td><span class="status-tag draft">未锁定</span></td><td class="col-action"><a class="btn-text" style="font-size:12px;" onclick="goToEdit('annual-plan',false,6)">编辑</a> <a class="btn-text" style="font-size:12px;" onclick="goToProjectEdit('plan')">培训立项</a></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ========== 年度培训计划记录 - 录入页 ========== -->
+      <div class="page-content" id="page-annual-plan-edit">
+        <div class="breadcrumb-bar">
+          <span class="back-btn" onclick="backToList('annual-plan')">← 返回列表</span>
+          <span class="bc-sep">/</span>
+          <span class="bc-current">年度培训计划记录 - 编辑</span>
+        </div>
+        <div class="action-bar">
+          <button class="btn btn-primary" onclick="showToast('已保存')">保存</button>
+
+          <button class="btn btn-text" onclick="showToast('已提交立项')">提交立项</button>
+        </div>
+        <div class="scroll-area">
+          <!-- 格子页签：计划信息 / 培训预算 -->
+          <div class="grid-tabs">
+            <div class="grid-tab active" onclick="switchGridTab(this,'plan-info-panel')">计划信息</div>
+            <div class="grid-tab" onclick="switchGridTab(this,'plan-budget-panel')">培训预算</div>
+          </div>
+          <!-- 计划信息面板 -->
+          <div class="grid-tab-panel active" id="plan-info-panel">
+            <div class="form-card">
+              <div class="form-card-header"><span class="form-card-indicator"></span><span class="form-card-title">计划信息</span></div>
+              <div class="form-body">
+                <div class="form-grid col-3">
+                  <div class="form-field">
+                    <label>日历年<span class="required">*</span></label>
+                    <div class="lookup-box"><input class="input-box" type="text" placeholder="选择预算年度" value="2026" readonly data-field="year"><span class="lookup-icon">🔍</span></div>
+                  </div>
+                  <div class="form-field">
+                    <label>公司<span class="required">*</span></label>
+                    <div class="lookup-box"><input class="input-box" type="text" placeholder="选择预算公司级部门" value="金蝶软件（中国）有限公司" readonly data-field="company"><span class="lookup-icon">🔍</span></div>
+                  </div>
+                  <div class="form-field">
+                    <label>生效日期</label>
+                    <input class="input-box" type="text" value="2026-01-01" readonly style="background:#F6F7F9;">
+                  </div>
+                  <div class="form-field">
+                    <label>状态</label>
+                    <select class="input-box"><option value="active" selected>有效</option><option value="inactive">无效</option></select>
+                  </div>
+                  <div class="form-field full">
+                    <label>培训项目<span class="required">*</span></label>
+                    <input class="input-box" type="text" placeholder="维护项目名称" maxlength="100" value="苍穹平台开发实战培训" data-field="projName">
+                  </div>
+                  <div class="form-field">
+                    <label>培训类型</label>
+                    <select class="input-box" data-field="type"><option value="">请选择</option><option value="10">10-外训</option><option value="11" selected>11-内部讲师内训</option><option value="12">12-外聘讲师内训</option></select>
+                  </div>
+                  <div class="form-field">
+                    <label>培训级别</label>
+                    <select class="input-box" data-field="level"><option value="">请选择</option><option value="10" selected>10-集团级</option><option value="11">11-公司级</option><option value="12">12-部门级</option></select>
+                  </div>
+                  <div class="form-field">
+                    <label>培训项目类型</label>
+                    <div class="lookup-box"><input class="input-box" type="text" placeholder="放大镜选择" value="T01 - 技术类培训" readonly><span class="lookup-icon">🔍</span></div>
+                  </div>
+                  <div class="form-field">
+                    <label>培训项目子类</label>
+                    <div class="lookup-box"><input class="input-box" type="text" placeholder="放大镜选择" value="ST01 - 前端技术" readonly><span class="lookup-icon">🔍</span></div>
+                  </div>
+                  <div class="form-field full">
+                    <label>培训需求说明</label>
+                    <input class="input-box" type="text" placeholder="维护培训需求的说明" maxlength="100" value="提升苍穹平台开发能力，规范开发流程" data-field="desc">
+                  </div>
+                  <div class="form-field">
+                    <label>培训对象</label>
+                    <input class="input-box" type="text" placeholder="维护培训对象" maxlength="100" value="后端开发工程师、前端开发工程师" data-field="target">
+                  </div>
+                  <div class="form-field">
+                    <label>计划人数</label>
+                    <input class="input-box" type="number" placeholder="0" min="0" value="45" data-field="count">
+                  </div>
+                  <div class="form-field">
+                    <label>计划培训月份</label>
+                    <div class="lookup-box"><input class="input-box" type="text" placeholder="选择培训计划实施的月份期间" value="2026年9月" readonly data-field="month"><span class="lookup-icon">🔍</span></div>
+                  </div>
+                  <div class="form-field">
+                    <label>培训讲师</label>
+                    <input class="input-box" type="text" placeholder="维护讲师（多个）" maxlength="100" value="张明、李芳" data-field="teacher">
+                  </div>
+                  <div class="form-field">
+                    <label>培训课时</label>
+                    <input class="input-box" type="number" placeholder="0" min="0" value="16" data-field="hours">
+                  </div>
+                  <div class="form-field">
+                    <label>立项状态</label>
+                    <input class="input-box input-readonly" type="text" value="已立项" readonly data-field="status">
+                    <span class="field-hint">系统立项流程后自动更新</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- 培训预算面板 -->
+          <div class="grid-tab-panel" id="plan-budget-panel">
+            <div class="form-card">
+              <div class="form-card-header"><span class="form-card-indicator"></span><span class="form-card-title">培训预算</span><span class="form-card-subtitle">单位：元</span></div>
+              <div class="form-body">
+                <div class="form-grid col-3">
+                  <div class="form-field"><label>课程开发奖励费</label><div class="amount-box"><span class="amt-prefix">¥</span><input class="input-box" type="number" placeholder="0.00" min="0" step="0.01" value="5000" oninput="calcBudget()" data-field="reward"><span class="amt-suffix">元</span></div></div>
+                  <div class="form-field"><label>内部讲师课时费</label><div class="amount-box"><span class="amt-prefix">¥</span><input class="input-box" type="number" placeholder="0.00" min="0" step="0.01" value="8000" oninput="calcBudget()" data-field="lecture"><span class="amt-suffix">元</span></div></div>
+                  <div class="form-field"><label>课件评审费</label><div class="amount-box"><span class="amt-prefix">¥</span><input class="input-box" type="number" placeholder="0.00" min="0" step="0.01" value="2000" oninput="calcBudget()" data-field="review"><span class="amt-suffix">元</span></div></div>
+                  <div class="form-field"><label>外训费用</label><div class="amount-box"><span class="amt-prefix">¥</span><input class="input-box" type="number" placeholder="0.00" min="0" step="0.01" value="0" oninput="calcBudget()" data-field="external"><span class="amt-suffix">元</span></div></div>
+                  <div class="form-field"><label>场地费</label><div class="amount-box"><span class="amt-prefix">¥</span><input class="input-box" type="number" placeholder="0.00" min="0" step="0.01" value="3000" oninput="calcBudget()" data-field="site"><span class="amt-suffix">元</span></div></div>
+                  <div class="form-field"><label>设备费</label><div class="amount-box"><span class="amt-prefix">¥</span><input class="input-box" type="number" placeholder="0.00" min="0" step="0.01" value="1500" oninput="calcBudget()" data-field="equipment"><span class="amt-suffix">元</span></div></div>
+                  <div class="form-field full"><label>其他费用</label><div class="amount-box"><span class="amt-prefix">¥</span><input class="input-box" type="number" placeholder="0.00" min="0" step="0.01" value="500" oninput="calcBudget()" data-field="other"><span class="amt-suffix">元</span></div></div>
+                </div>
+                <div class="summary-bar" style="margin-top:16px;">
+                  <div><span class="summary-label">内部奖励合计：</span><span class="summary-value" id="sum-inner">¥0.00</span></div>
+                  <div><span class="summary-label">外训费用合计：</span><span class="summary-value" id="sum-external">¥0.00</span></div>
+                  <div><span class="summary-label">场地设备费用合计：</span><span class="summary-value" id="sum-site">¥0.00</span></div>
+                  <div style="margin-left:auto;"><span class="summary-label">合计费：</span><span class="summary-value" id="sum-total" style="font-size:18px;">¥0.00</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ========== 培训预算科目配置 - 列表页 ========== -->
+      <div class="page-content" id="page-budget-config-list">
+        <div class="filter-panel">
+          <div class="filter-row">
+            <span class="filter-label">科目名称</span>
+            <input class="filter-input" type="text" placeholder="请输入" style="width:180px;">
+            <span class="filter-label">分类</span>
+            <select class="filter-input select-style" style="width:160px;"><option value="">全部</option><option>内部奖励</option><option>外训费用</option><option>外聘讲师内训费用</option></select>
+            <button class="btn btn-primary" style="margin-left:auto;">查询</button>
+            <button class="btn btn-secondary">重置</button>
+          </div>
+        </div>
+        <div class="list-toolbar">
+          <div class="toolbar-left">
+            <button class="btn btn-primary" onclick="newRecord('budget-config')">+ 新增</button>
+            <button class="btn btn-secondary">删除</button>
+            <div class="toolbar-divider"></div>
+            <button class="btn btn-secondary">刷新</button>
+          </div>
+        </div>
+        <div class="list-scroll">
+          <div class="list-page-bar">
+            <div class="lpb-left">共 7 条</div>
+            <div class="lpb-right"><span class="page-size">20条/页</span></div>
+          </div>
+          <div class="table-container">
+            <table class="data-table">
+              <thead><tr><th class="col-checkbox"><input type="checkbox"></th><th>科目名称</th><th>所属分类</th><th>排序</th><th class="col-action">操作</th></tr></thead>
+              <tbody>
+                <tr><td class="col-checkbox"><input type="checkbox"></td><td><span class="link-cell" onclick="goToEdit('budget-config',false,0)">课程开发奖励费</span></td><td>内部奖励</td><td>1</td><td class="col-action"><a class="btn-text" style="font-size:12px;" onclick="goToEdit('budget-config',false,0)">编辑</a></td></tr>
+                <tr><td class="col-checkbox"><input type="checkbox"></td><td><span class="link-cell" onclick="goToEdit('budget-config',false,1)">内部讲师课时费</span></td><td>内部奖励</td><td>2</td><td class="col-action"><a class="btn-text" style="font-size:12px;" onclick="goToEdit('budget-config',false,1)">编辑</a></td></tr>
+                <tr><td class="col-checkbox"><input type="checkbox"></td><td><span class="link-cell" onclick="goToEdit('budget-config',false,2)">课件评审费</span></td><td>内部奖励</td><td>3</td><td class="col-action"><a class="btn-text" style="font-size:12px;" onclick="goToEdit('budget-config',false,2)">编辑</a></td></tr>
+                <tr><td class="col-checkbox"><input type="checkbox"></td><td><span class="link-cell" onclick="goToEdit('budget-config',false,3)">外训费用</span></td><td>外训费用</td><td>4</td><td class="col-action"><a class="btn-text" style="font-size:12px;" onclick="goToEdit('budget-config',false,3)">编辑</a></td></tr>
+                <tr><td class="col-checkbox"><input type="checkbox"></td><td><span class="link-cell" onclick="goToEdit('budget-config',false,4)">场地费</span></td><td>外聘讲师内训费用</td><td>5</td><td class="col-action"><a class="btn-text" style="font-size:12px;" onclick="goToEdit('budget-config',false,4)">编辑</a></td></tr>
+                <tr><td class="col-checkbox"><input type="checkbox"></td><td><span class="link-cell" onclick="goToEdit('budget-config',false,5)">设备费</span></td><td>外聘讲师内训费用</td><td>6</td><td class="col-action"><a class="btn-text" style="font-size:12px;" onclick="goToEdit('budget-config',false,5)">编辑</a></td></tr>
+                <tr><td class="col-checkbox"><input type="checkbox"></td><td><span class="link-cell" onclick="goToEdit('budget-config',false,6)">其他费用</span></td><td>外聘讲师内训费用</td><td>7</td><td class="col-action"><a class="btn-text" style="font-size:12px;" onclick="goToEdit('budget-config',false,6)">编辑</a></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ========== 培训预算科目配置 - 录入页 ========== -->
+      <div class="page-content" id="page-budget-config-edit">
+        <div class="breadcrumb-bar">
+          <span class="back-btn" onclick="backToList('budget-config')">← 返回列表</span>
+          <span class="bc-sep">/</span>
+          <span class="bc-current">培训预算科目配置 - 编辑</span>
+        </div>
+        <div class="action-bar">
+          <button class="btn btn-primary" onclick="showToast('已保存')">保存</button>
+
+        </div>
+        <div class="scroll-area">
+          <div class="form-card">
+            <div class="form-card-header"><span class="form-card-indicator"></span><span class="form-card-title">预算科目信息</span></div>
+            <div class="form-body">
+              <div class="form-grid">
+                <div class="form-field">
+                  <label>科目名称<span class="required">*</span></label>
+                  <input class="input-box" type="text" placeholder="请输入科目名称" maxlength="100" value="课程开发奖励费" data-field="name">
+                </div>
+                <div class="form-field">
+                  <label>所属分类<span class="required">*</span></label>
+                  <select class="input-box" data-field="category"><option value="">请选择</option><option value="inner" selected>内部奖励</option><option value="external">外训费用</option><option value="hire">外聘讲师内训费用</option></select>
+                </div>
+                <div class="form-field">
+                  <label>排序</label>
+                  <input class="input-box" type="number" placeholder="0" min="0" value="1" data-field="sort">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-card">
+            <div class="form-card-header"><span class="form-card-indicator"></span><span class="form-card-title">分类说明</span></div>
+            <div class="form-body">
+              <div style="font-size:13px;color:#555;line-height:28px;">
+                <p><strong>1）内部奖励：</strong>课程开发奖励费、内部讲师课时费、课件评审费</p>
+                <p><strong>2）外训费用：</strong>外训费用</p>
+                <p><strong>3）外聘讲师内训费用：</strong>场地费、设备费、其他费用</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ========== 培训立项详情页 ========== -->
+      <div class="page-content" id="page-training-project-edit">
+        <div class="breadcrumb-bar">
+          <span class="back-btn" onclick="historyBack()">← 返回</span>
+          <span class="bc-sep">/</span>
+          <span class="bc-current">培训立项 - 编辑</span>
+        </div>
+        <div class="action-bar">
+          <button class="btn btn-primary" onclick="showToast('已保存')">保存</button>
+          <button class="btn btn-text" onclick="showToast('已提交')">提交</button>
+        </div>
+        <div class="scroll-area">
+          <!-- 区块1：基本信息 -->
+          <div class="form-card">
+            <div class="form-card-header"><span class="form-card-indicator"></span><span class="form-card-title">基本信息</span></div>
+            <div class="form-body">
+              <div class="form-grid col-3">
+                <div class="form-field">
+                  <label>是否计划内培训</label>
+                  <select class="input-box" onchange="togglePlanType(this)">
+                    <option value="in">计划内培训</option>
+                    <option value="out">计划外培训</option>
+                  </select>
+                </div>
+                <div class="form-field" id="field-demand">
+                  <label>培训需求</label>
+                  <div class="lookup-box"><input class="input-box" type="text" placeholder="搜索通过审批的需求" readonly data-field="demand"><span class="lookup-icon">🔍</span></div>
+                </div>
+                <div class="form-field" id="field-plan">
+                  <label>培训计划</label>
+                  <div class="lookup-box"><input class="input-box" type="text" placeholder="搜索培训计划" readonly data-field="plan"><span class="lookup-icon">🔍</span></div>
+                </div>
+                <div class="form-field">
+                  <label>待开展培训</label>
+                  <div class="lookup-box"><input class="input-box" type="text" placeholder="搜索培训项目模板" readonly data-field="template"><span class="lookup-icon">🔍</span></div>
+                </div>
+                <div class="form-field full">
+                  <label>培训项目名称</label>
+                  <input class="input-box" type="text" placeholder="由需求/计划/模板带出，可编辑" data-field="projName" maxlength="100">
+                </div>
+                <div class="form-field">
+                  <label>培训类型</label>
+                  <select class="input-box" data-field="type"><option value="">请选择</option><option value="10">外训</option><option value="11">外部讲师内训</option><option value="12">内部讲师内训</option></select>
+                </div>
+                <div class="form-field">
+                  <label>签署培训协议</label>
+                  <label class="kd-checkbox"><input type="checkbox"><span class="cb-text">外派培训需签署协议</span></label>
+                </div>
+                <div class="form-field">
+                  <label>直播</label>
+                  <label class="kd-checkbox"><input type="checkbox"><span class="cb-text">直播策划</span></label>
+                </div>
+                <div class="form-field">
+                  <label>培训级别</label>
+                  <select class="input-box" data-field="level"><option value="">请选择</option><option value="10">集团级</option><option value="11">公司级</option><option value="12">部门级</option></select>
+                </div>
+                <div class="form-field">
+                  <label>组织部门</label>
+                  <div class="lookup-box"><input class="input-box" type="text" placeholder="默认发起人部门" readonly data-field="orgDept"><span class="lookup-icon">🔍</span></div>
+                </div>
+                <div class="form-field">
+                  <label>培训项目类型</label>
+                  <div class="lookup-box"><input class="input-box" type="text" placeholder="放大镜选择" readonly data-field="projType"><span class="lookup-icon">🔍</span></div>
+                </div>
+                <div class="form-field">
+                  <label>培训项目子类</label>
+                  <div class="lookup-box"><input class="input-box" type="text" placeholder="放大镜选择" readonly data-field="projSub"><span class="lookup-icon">🔍</span></div>
+                </div>
+                <div class="form-field">
+                  <label>项目开始日期</label>
+                  <input class="input-box" type="date" data-field="startDate">
+                </div>
+                <div class="form-field">
+                  <label>项目结束日期</label>
+                  <input class="input-box" type="date" data-field="endDate">
+                </div>
+                <div class="form-field">
+                  <label>项目开始时间</label>
+                  <input class="input-box" type="time" data-field="startTime">
+                </div>
+                <div class="form-field">
+                  <label>项目结束时间</label>
+                  <input class="input-box" type="time" data-field="endTime">
+                </div>
+                <div class="form-field">
+                  <label>培训地点</label>
+                  <input class="input-box" type="text" placeholder="维护详细地址" data-field="place" maxlength="100">
+                </div>
+                <div class="form-field">
+                  <label>培训课时</label>
+                  <input class="input-box" type="text" placeholder="培训课时" data-field="hours">
+                </div>
+                <div class="form-field full">
+                  <label>培训内容</label>
+                  <textarea class="input-box" data-field="content" maxlength="254"></textarea>
+                </div>
+                <div class="form-field full">
+                  <label>培训原因</label>
+                  <textarea class="input-box" data-field="reason" maxlength="254"></textarea>
+                </div>
+                <div class="form-field full">
+                  <label>培训效果转化方式</label>
+                  <textarea class="input-box" data-field="transform" maxlength="254"></textarea>
+                </div>
+                <div class="form-field">
+                  <label>新员工培训</label>
+                  <label class="kd-checkbox"><input type="checkbox" data-field="newcomer"><span class="cb-text">新员工线下培训</span></label>
+                </div>
+                <div class="form-field">
+                  <label>上岗取证</label>
+                  <label class="kd-checkbox"><input type="checkbox" data-field="onJobCert"><span class="cb-text">上岗取证类</span></label>
+                </div>
+                <div class="form-field">
+                  <label>培训评估</label>
+                  <label class="kd-checkbox"><input type="checkbox" data-field="evaluation"><span class="cb-text">需要培训评估</span></label>
+                </div>
+                <div class="form-field">
+                  <label>证书名称</label>
+                  <div class="lookup-box"><input class="input-box" type="text" placeholder="放大镜选择" readonly data-field="certName"><span class="lookup-icon">🔍</span></div>
+                </div>
+                <div class="form-field">
+                  <label>证书颁发机构</label>
+                  <input class="input-box" type="text" placeholder="维护颁发机构" data-field="certOrg" maxlength="100">
+                </div>
+                <div class="form-field">
+                  <label>供应商</label>
+                  <div class="lookup-box"><input class="input-box" type="text" placeholder="放大镜选择" readonly data-field="supplier"><span class="lookup-icon">🔍</span></div>
+                </div>
+                <div class="form-field">
+                  <label>会员卡/课程</label>
+                  <input class="input-box input-readonly" type="text" value="" readonly data-field="memberCard">
+                </div>
+                <div class="form-field">
+                  <label>使用</label>
+                  <label class="kd-checkbox"><input type="checkbox" data-field="useMember"><span class="cb-text">使用会员卡</span></label>
+                </div>
+                <div class="form-field">
+                  <label>使用金额/次数</label>
+                  <input class="input-box" type="text" placeholder="0" data-field="useAmount">
+                </div>
+                <div class="form-field">
+                  <label>会员卡总金额/次数</label>
+                  <input class="input-box input-readonly" type="text" value="" readonly data-field="memberTotal">
+                </div>
+                <div class="form-field">
+                  <label>会员卡剩余金额/次数</label>
+                  <input class="input-box" type="text" placeholder="0" data-field="memberRemain">
+                </div>
+                <div class="form-field full">
+                  <label>备注</label>
+                  <input class="input-box" type="text" placeholder="备注" data-field="remark" maxlength="100">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 区块2：培训预算 -->
+          <div class="form-card">
+            <div class="form-card-header"><span class="form-card-indicator"></span><span class="form-card-title">培训预算</span><span class="form-card-subtitle">单位：元</span></div>
+            <div class="form-body">
+              <div class="form-grid col-3">
+                <div class="form-field"><label>课程开发奖励</label><div class="amount-box"><span class="amt-prefix">¥</span><input class="input-box" type="number" placeholder="0.00" data-field="reward" oninput="calcProjectBudget()"><span class="amt-suffix">元</span></div></div>
+                <div class="form-field"><label>内部讲师课时费</label><div class="amount-box"><span class="amt-prefix">¥</span><input class="input-box" type="number" placeholder="0.00" data-field="lecture" oninput="calcProjectBudget()"><span class="amt-suffix">元</span></div></div>
+                <div class="form-field"><label>课件评审费</label><div class="amount-box"><span class="amt-prefix">¥</span><input class="input-box" type="number" placeholder="0.00" data-field="review" oninput="calcProjectBudget()"><span class="amt-suffix">元</span></div></div>
+                <div class="form-field"><label>讲师费合计</label><input class="input-box input-readonly" type="text" value="¥0.00" readonly id="pb-lecture-total"></div>
+                <div class="form-field"><label>外训费用</label><div class="amount-box"><span class="amt-prefix">¥</span><input class="input-box" type="number" placeholder="0.00" data-field="external" oninput="calcProjectBudget()"><span class="amt-suffix">元</span></div></div>
+                <div class="form-field"><label>外训费合计</label><input class="input-box input-readonly" type="text" value="¥0.00" readonly id="pb-external-total"></div>
+                <div class="form-field"><label>场地费</label><div class="amount-box"><span class="amt-prefix">¥</span><input class="input-box" type="number" placeholder="0.00" data-field="site" oninput="calcProjectBudget()"><span class="amt-suffix">元</span></div></div>
+                <div class="form-field"><label>设备费</label><div class="amount-box"><span class="amt-prefix">¥</span><input class="input-box" type="number" placeholder="0.00" data-field="equipment" oninput="calcProjectBudget()"><span class="amt-suffix">元</span></div></div>
+                <div class="form-field"><label>其他费用</label><div class="amount-box"><span class="amt-prefix">¥</span><input class="input-box" type="number" placeholder="0.00" data-field="other" oninput="calcProjectBudget()"><span class="amt-suffix">元</span></div></div>
+                <div class="form-field"><label>场地设备费合计</label><input class="input-box input-readonly" type="text" value="¥0.00" readonly id="pb-site-total"></div>
+              </div>
+              <div class="summary-bar" style="margin-top:16px;">
+                <span class="summary-label">合计：</span><span class="summary-value" id="pb-grand-total" style="font-size:18px;">¥0.00</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 区块3：参训学员 -->
+          <div class="form-card">
+            <div class="form-card-header"><span class="form-card-indicator"></span><span class="form-card-title">参训学员</span>
+              <div style="margin-left:auto;"><button class="btn btn-primary btn-sm" onclick="openPersonPicker()">选择参训人员</button></div>
+            </div>
+            <div class="form-body">
+              <div class="form-grid">
+                <div class="form-field full">
+                  <label>参训人员范围</label>
+                  <input class="input-box input-readonly" type="text" value="" readonly data-field="scope">
+                </div>
+                <div class="form-field">
+                  <label>指定培训类型</label>
+                  <input class="input-box input-readonly" type="text" value="" readonly data-field="assignType">
+                </div>
+                <div class="form-field">
+                  <label>是否免培</label>
+                  <input class="input-box input-readonly" type="text" value="否" readonly data-field="exempt">
+                </div>
+              </div>
+              <div style="margin-top:16px;padding:12px;background:#F6F7F9;border:1px solid #D7D7D7;border-radius:3px;">
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+                  <span style="font-size:13px;color:#AAAAAA;">人员名单</span>
+                  <span style="font-size:13px;color:#5582F3;">共 <strong id="person-count">3</strong> 人</span>
+                </div>
+                <table class="entry-table" id="person-table">
+                  <thead><tr><th style="width:40px;">序号</th><th>员工ID</th><th>员工姓名</th><th>部门</th><th>岗位</th><th style="width:60px;">操作</th></tr></thead>
+                  <tbody id="person-tbody">
+                    <tr><td>1</td><td>EMP2025038</td><td>王雪儿</td><td>产品研发中心</td><td>高级产品经理</td><td><a class="btn-text btn-text-danger" style="font-size:12px;" onclick="removePerson(this)">移除</a></td></tr>
+                    <tr><td>2</td><td>EMP2025042</td><td>李明</td><td>基础平台部</td><td>后端开发工程师</td><td><a class="btn-text btn-text-danger" style="font-size:12px;" onclick="removePerson(this)">移除</a></td></tr>
+                    <tr><td>3</td><td>EMP2025045</td><td>陈静</td><td>基础平台部</td><td>前端开发工程师</td><td><a class="btn-text btn-text-danger" style="font-size:12px;" onclick="removePerson(this)">移除</a></td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ========== 计划外培训立项 - 列表页 ========== -->
+      <div class="page-content" id="page-unplanned-project-list">
+        <div class="filter-panel">
+          <div class="filter-row">
+            <span class="filter-label">项目名称</span>
+            <input class="filter-input" type="text" placeholder="请输入" style="width:200px;">
+            <span class="filter-label">培训类型</span>
+            <select class="filter-input select-style" style="width:140px;"><option value="">全部</option><option>外训</option><option>外部讲师内训</option><option>内部讲师内训</option></select>
+            <span class="filter-label">状态</span>
+            <select class="filter-input select-style" style="width:120px;"><option value="">全部</option><option>草稿</option><option>待审批</option><option>已通过</option><option>已驳回</option></select>
+            <button class="btn btn-primary" style="margin-left:auto;">查询</button>
+            <button class="btn btn-secondary">重置</button>
+          </div>
+        </div>
+        <div class="list-toolbar">
+          <div class="toolbar-left">
+            <button class="btn btn-primary" onclick="newRecord('training-project')">+ 新增</button>
+            <button class="btn btn-secondary">删除</button>
+            <div class="toolbar-divider"></div>
+            <button class="btn btn-secondary">导出</button>
+            <button class="btn btn-secondary">刷新</button>
+          </div>
+        </div>
+        <div class="list-scroll">
+          <div class="list-page-bar">
+            <div class="lpb-left">共 3 条</div>
+            <div class="lpb-right"><span class="page-size">20条/页</span></div>
+          </div>
+          <div class="table-container">
+            <table class="data-table">
+              <thead><tr><th class="col-checkbox"><input type="checkbox"></th><th>培训项目名称</th><th>培训类型</th><th>培训级别</th><th>组织部门</th><th>项目开始日期</th><th>项目结束日期</th><th>状态</th><th class="col-action">操作</th></tr></thead>
+              <tbody>
+                <tr><td class="col-checkbox"><input type="checkbox"></td><td><span class="link-cell" onclick="goToEdit('training-project',false,0)">应急安全响应专项培训</span></td><td>内部讲师内训</td><td>公司级</td><td>信息安全部</td><td>2026-08-20</td><td>2026-08-20</td><td><span class="status-tag pending">待审批</span></td><td class="col-action"><a class="btn-text" style="font-size:12px;" onclick="goToEdit('training-project',false,0)">编辑</a></td></tr>
+                <tr><td class="col-checkbox"><input type="checkbox"></td><td><span class="link-cell" onclick="goToEdit('training-project',false,1)">新工具快速引入培训</span></td><td>外部讲师内训</td><td>部门级</td><td>基础平台部</td><td>2026-09-10</td><td>2026-09-10</td><td><span class="status-tag approved">已通过</span></td><td class="col-action"><a class="btn-text" style="font-size:12px;" onclick="goToEdit('training-project',false,1)">查看</a></td></tr>
+                <tr><td class="col-checkbox"><input type="checkbox"></td><td><span class="link-cell" onclick="goToEdit('training-project',false,2)">突发合规要求培训</span></td><td>内部讲师内训</td><td>集团级</td><td>科技部</td><td>2026-07-15</td><td>2026-07-15</td><td><span class="status-tag rejected">已驳回</span></td><td class="col-action"><a class="btn-text" style="font-size:12px;" onclick="goToEdit('training-project',false,2)">编辑</a></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ========== 培训结果 - 列表页 ========== -->
+      <div class="page-content" id="page-employee-profile-list">
+        <div class="filter-panel">
+          <div class="filter-row">
+            <span class="filter-label">员工姓名</span>
+            <input class="filter-input" type="text" placeholder="请输入" style="width:150px;">
+            <span class="filter-label">工号</span>
+            <input class="filter-input" type="text" placeholder="请输入" style="width:120px;">
+            <span class="filter-label">部门</span>
+            <input class="filter-input" type="text" placeholder="请输入" style="width:160px;">
+            <span class="filter-label">岗位</span>
+            <input class="filter-input" type="text" placeholder="请输入" style="width:140px;">
+            <button class="btn btn-primary" style="margin-left:auto;">查询</button>
+            <button class="btn btn-secondary">重置</button>
+          </div>
+        </div>
+        <div class="list-toolbar">
+          <div class="toolbar-left">
+            <button class="btn btn-secondary">导出</button>
+            <button class="btn btn-secondary">刷新</button>
+          </div>
+        </div>
+        <div class="list-scroll">
+          <div class="list-page-bar">
+            <div class="lpb-left">共 8 条</div>
+            <div class="lpb-right"><span class="page-size">20条/页</span></div>
+          </div>
+          <div class="table-container">
+            <table class="data-table">
+              <thead><tr><th>员工ID</th><th>姓名</th><th>部门</th><th>岗位</th><th>公司</th><th>入职日期</th><th>培训学时合计</th><th>培训学分合计</th><th class="col-action">操作</th></tr></thead>
+              <tbody>
+                <tr><td><span class="link-cell" onclick="goToEdit('employee-profile',false,0)">EMP2025038</span></td><td>王雪儿</td><td>产品研发中心</td><td>高级产品经理</td><td>金蝶软件（中国）</td><td>2023-03-15</td><td>128</td><td>24</td><td class="col-action"><a class="btn-text" style="font-size:12px;" onclick="goToEdit('employee-profile',false,0)">查看</a></td></tr>
+                <tr><td><span class="link-cell" onclick="goToEdit('employee-profile',false,1)">EMP2025042</span></td><td>李明</td><td>基础平台部</td><td>后端开发工程师</td><td>金蝶软件（中国）</td><td>2022-07-01</td><td>96</td><td>18</td><td class="col-action"><a class="btn-text" style="font-size:12px;" onclick="goToEdit('employee-profile',false,1)">查看</a></td></tr>
+                <tr><td><span class="link-cell" onclick="goToEdit('employee-profile',false,2)">EMP2025045</span></td><td>陈静</td><td>基础平台部</td><td>前端开发工程师</td><td>金蝶软件（中国）</td><td>2023-01-10</td><td>72</td><td>14</td><td class="col-action"><a class="btn-text" style="font-size:12px;" onclick="goToEdit('employee-profile',false,2)">查看</a></td></tr>
+                <tr><td><span class="link-cell" onclick="goToEdit('employee-profile',false,3)">EMP2025050</span></td><td>张伟</td><td>应用产品部</td><td>产品经理</td><td>金蝶软件（中国）</td><td>2021-05-20</td><td>160</td><td>30</td><td class="col-action"><a class="btn-text" style="font-size:12px;" onclick="goToEdit('employee-profile',false,3)">查看</a></td></tr>
+                <tr><td><span class="link-cell" onclick="goToEdit('employee-profile',false,4)">EMP2025052</span></td><td>刘强</td><td>信息安全部</td><td>安全工程师</td><td>金蝶软件（中国）</td><td>2020-09-15</td><td>200</td><td>36</td><td class="col-action"><a class="btn-text" style="font-size:12px;" onclick="goToEdit('employee-profile',false,4)">查看</a></td></tr>
+                <tr><td><span class="link-cell" onclick="goToEdit('employee-profile',false,5)">EMP2025060</span></td><td>孙丽</td><td>应用产品部</td><td>测试工程师</td><td>金蝶软件（中国）</td><td>2023-06-01</td><td>64</td><td>12</td><td class="col-action"><a class="btn-text" style="font-size:12px;" onclick="goToEdit('employee-profile',false,5)">查看</a></td></tr>
+                <tr><td><span class="link-cell" onclick="goToEdit('employee-profile',false,6)">EMP2025070</span></td><td>郑明</td><td>基础平台部</td><td>架构师</td><td>金蝶软件（中国）</td><td>2019-03-01</td><td>240</td><td>42</td><td class="col-action"><a class="btn-text" style="font-size:12px;" onclick="goToEdit('employee-profile',false,6)">查看</a></td></tr>
+                <tr><td><span class="link-cell" onclick="goToEdit('employee-profile',false,7)">EMP2025080</span></td><td>陈涛</td><td>基础平台部</td><td>后端开发工程师</td><td>金蝶医疗软件</td><td>2022-11-15</td><td>88</td><td>16</td><td class="col-action"><a class="btn-text" style="font-size:12px;" onclick="goToEdit('employee-profile',false,7)">查看</a></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ========== 员工详情页 ========== -->
+      <div class="page-content" id="page-employee-profile-edit">
+        <div class="breadcrumb-bar">
+          <span class="back-btn" onclick="backToList('employee-profile')">← 返回列表</span>
+          <span class="bc-sep">/</span>
+          <span class="bc-current">培训结果 - 详情</span>
+        </div>
+        <div class="action-bar">
+          <button class="btn btn-secondary" onclick="showToast('已导出')">导出</button>
+          <button class="btn btn-text" onclick="showToast('打印')">打印</button>
+        </div>
+        <div class="scroll-area">
+
+          <!-- 基本信息 -->
+          <div class="form-card">
+            <div class="form-card-header"><span class="form-card-indicator"></span><span class="form-card-title">员工基本信息</span></div>
+            <div class="form-body">
+              <div class="form-grid col-3">
+                <div class="form-field"><label>员工ID</label><input class="input-box input-readonly" value="" readonly data-field="empId"></div>
+                <div class="form-field"><label>姓名</label><input class="input-box input-readonly" value="" readonly data-field="empName"></div>
+                <div class="form-field"><label>部门</label><input class="input-box input-readonly" value="" readonly data-field="dept"></div>
+                <div class="form-field"><label>岗位</label><input class="input-box input-readonly" value="" readonly data-field="post"></div>
+                <div class="form-field"><label>公司</label><input class="input-box input-readonly" value="" readonly data-field="company"></div>
+                <div class="form-field"><label>入职日期</label><input class="input-box input-readonly" value="" readonly data-field="entryDate"></div>
+                <div class="form-field"><label>培训学时合计</label><input class="input-box input-readonly" value="" readonly data-field="totalHours"></div>
+                <div class="form-field"><label>培训学分合计</label><input class="input-box input-readonly" value="" readonly data-field="totalCredits"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 区块1：云学堂培训记录 -->
+          <div class="form-card">
+            <div class="form-card-header"><span class="form-card-indicator"></span><span class="form-card-title">云学堂培训记录</span></div>
+            <!-- 格子页签 -->
+            <div class="grid-tabs">
+              <div class="grid-tab active" onclick="switchGridTab(this,'emp-online-panel')">在线学习</div>
+              <div class="grid-tab" onclick="switchGridTab(this,'emp-project-panel')">培训项目</div>
+              <div class="grid-tab" onclick="switchGridTab(this,'emp-live-panel')">直播课程</div>
+            </div>
+            <div class="form-body">
+              <!-- 1.1 在线学习 -->
+              <div class="grid-tab-panel active" id="emp-online-panel">
+                <table class="data-table" style="border:1px solid #D7D7D7;">
+                  <thead><tr><th>开始时间</th><th>结束时间</th><th>在线课ID</th><th>在线课名称</th><th>学时(时)</th><th>学分</th><th>学习模式</th><th>考试得分</th><th>评价得分</th></tr></thead>
+                  <tbody>
+                    <tr><td>2026-03-01 09:00</td><td>2026-03-01 12:00</td><td>OLC001</td><td>产品需求分析实战</td><td>3</td><td>2</td><td>自主学习</td><td>85</td><td>4.5</td></tr>
+                    <tr><td>2026-04-10 14:00</td><td>2026-04-10 17:00</td><td>OLC003</td><td>苍穹平台开发入门</td><td>3</td><td>3</td><td>指派学习</td><td>92</td><td>4.8</td></tr>
+                    <tr><td>2026-05-15 09:00</td><td>2026-05-15 11:00</td><td>OLC004</td><td>信息安全意识培训</td><td>2</td><td>1</td><td>必修</td><td>78</td><td>4.2</td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <!-- 1.2 培训项目 -->
+              <div class="grid-tab-panel" id="emp-project-panel">
+                <table class="data-table" style="border:1px solid #D7D7D7;">
+                  <thead><tr><th>开始时间</th><th>结束时间</th><th>课程ID</th><th>课程名称</th><th>学时(时)</th><th>学分</th><th>指派原因</th><th>考试得分</th><th>评价得分</th><th>培训项目ID</th><th>培训项目名称</th><th>项目类型</th></tr></thead>
+                  <tbody>
+                    <tr><td>2026-03-10 09:00</td><td>2026-03-12 17:00</td><td>CRS001</td><td>苍穹开发实战</td><td>24</td><td>6</td><td>新员工必修</td><td>88</td><td>4.6</td><td>OFP001</td><td>2026新员工集训营</td><td>线下培训</td></tr>
+                    <tr><td>2026-06-15 09:00</td><td>2026-06-16 17:00</td><td>CRS002</td><td>敏捷开发实战</td><td>16</td><td>4</td><td>部门指派</td><td>90</td><td>4.7</td><td>OFP003</td><td>敏捷开发实战工作坊</td><td>线下培训</td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <!-- 1.3 直播课程 -->
+              <div class="grid-tab-panel" id="emp-live-panel">
+                <table class="data-table" style="border:1px solid #D7D7D7;">
+                  <thead><tr><th>开始时间</th><th>结束时间</th><th>直播名称</th><th>讲师</th><th>累计在线时长</th></tr></thead>
+                  <tbody>
+                    <tr><td>2026-04-20 14:00</td><td>2026-04-20 16:00</td><td>苍穹平台2026新品发布</td><td>产品总监 张总</td><td>2小时15分</td></tr>
+                    <tr><td>2026-05-28 10:00</td><td>2026-05-28 11:30</td><td>信息安全最佳实践分享</td><td>安全专家 刘强</td><td>1小时28分</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- 区块2：外派培训记录 -->
+          <div class="form-card">
+            <div class="form-card-header"><span class="form-card-indicator"></span><span class="form-card-title">外派培训记录</span></div>
+            <div class="form-body">
+              <table class="data-table" style="border:1px solid #D7D7D7;">
+                <thead><tr><th>开始日期</th><th>结束日期</th><th>培训名称</th><th>线下成绩</th><th>培训总结</th><th>签署培训协议</th></tr></thead>
+                <tbody>
+                  <tr><td>2026-02-15</td><td>2026-02-18</td><td>PMP项目管理认证</td><td>通过</td><td><a class="link-cell" onclick="showToast('查看培训总结')">查看总结</a></td><td>是</td></tr>
+                  <tr><td>2026-07-01</td><td>2026-07-03</td><td>技术架构师高级研修</td><td>优秀</td><td><a class="link-cell" onclick="showToast('查看培训总结')">查看总结</a></td><td>是</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- 区块3：外部学习记录 -->
+          <div class="form-card">
+            <div class="form-card-header"><span class="form-card-indicator"></span><span class="form-card-title">外部学习记录</span></div>
+            <div class="form-body">
+              <table class="data-table" style="border:1px solid #D7D7D7;">
+                <thead><tr><th>开始日期</th><th>结束日期</th><th>外部学习类型</th><th>单位</th><th>学历/证书</th><th>状态</th></tr></thead>
+                <tbody>
+                  <tr><td>2019-09-01</td><td>2022-07-01</td><td>在职研究生</td><td>深圳大学</td><td>软件工程硕士</td><td>已完成</td></tr>
+                  <tr><td>2025-03-01</td><td>2025-06-01</td><td>外部进修</td><td>极客时间</td><td>架构师认证</td><td>已完成</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- 区块4：历史培训记录 -->
+          <div class="form-card">
+            <div class="form-card-header"><span class="form-card-indicator"></span><span class="form-card-title">历史培训记录</span></div>
+            <div class="form-body">
+              <table class="data-table" style="border:1px solid #D7D7D7;">
+                <thead><tr><th>开始时间</th><th>完成时间</th><th>培训名称</th><th>学时(时)</th><th>学分</th></tr></thead>
+                <tbody>
+                  <tr><td>2023-04-10</td><td>2023-04-12</td><td>新员工入职培训</td><td>16</td><td>4</td></tr>
+                  <tr><td>2023-08-15</td><td>2023-08-15</td><td>信息安全合规培训</td><td>4</td><td>1</td></tr>
+                  <tr><td>2024-03-01</td><td>2024-03-02</td><td>苍穹平台开发基础</td><td>12</td><td>3</td></tr>
+                  <tr><td>2024-09-10</td><td>2024-09-12</td><td>项目管理基础</td><td>8</td><td>2</td></tr>
+                  <tr><td>2025-01-15</td><td>2025-01-16</td><td>敏捷开发方法论</td><td>8</td><td>2</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ========== 考试结果 - 列表页 ========== -->
+      <div class="page-content" id="page-exam-result-list">
+        <div class="filter-panel">
+          <div class="filter-row">
+            <span class="filter-label">考试名称</span>
+            <input class="filter-input" type="text" placeholder="请输入" style="width:200px;">
+            <span class="filter-label">考试类型</span>
+            <select class="filter-input select-style" style="width:160px;"><option value="">全部</option><option>学习计划考试</option><option>课程考试</option><option>认证考试</option></select>
+            <span class="filter-label">状态</span>
+            <select class="filter-input select-style" style="width:120px;"><option value="">全部</option><option>已归档</option><option>进行中</option><option>已结束</option></select>
+            <button class="btn btn-primary" style="margin-left:auto;">查询</button>
+            <button class="btn btn-secondary">重置</button>
+          </div>
+        </div>
+        <div class="list-toolbar">
+          <div class="toolbar-left">
+            <button class="btn btn-secondary">导出</button>
+            <button class="btn btn-secondary">刷新</button>
+          </div>
+        </div>
+        <div class="list-scroll">
+          <div class="list-page-bar">
+            <div class="lpb-left">共 6 条</div>
+            <div class="lpb-right"><span class="page-size">20条/页</span></div>
+          </div>
+          <div class="table-container">
+            <table class="data-table">
+              <thead><tr><th>云学堂安排考试ID</th><th>考试名称</th><th>考试类型</th><th>试卷总分</th><th>通过分</th><th>状态</th><th>考试安排人</th><th class="col-action">操作</th></tr></thead>
+              <tbody>
+                <tr><td><span class="link-cell" onclick="goToEdit('exam-result',false,0)">EXM20260001</span></td><td>苍穹平台开发基础认证</td><td>学习计划考试</td><td>100</td><td>60</td><td><span class="status-tag approved">已归档</span></td><td>王雪儿</td><td class="col-action"><a class="btn-text" style="font-size:12px;" onclick="goToEdit('exam-result',false,0)">查看</a></td></tr>
+                <tr><td><span class="link-cell" onclick="goToEdit('exam-result',false,1)">EXM20260002</span></td><td>项目管理基础测验</td><td>课程考试</td><td>100</td><td>70</td><td><span class="status-tag approved">已归档</span></td><td>李明</td><td class="col-action"><a class="btn-text" style="font-size:12px;" onclick="goToEdit('exam-result',false,1)">查看</a></td></tr>
+                <tr><td><span class="link-cell" onclick="goToEdit('exam-result',false,2)">EXM20260003</span></td><td>信息安全合规考试</td><td>学习计划考试</td><td>100</td><td>80</td><td><span class="status-tag approved">已归档</span></td><td>刘强</td><td class="col-action"><a class="btn-text" style="font-size:12px;" onclick="goToEdit('exam-result',false,2)">查看</a></td></tr>
+                <tr><td><span class="link-cell" onclick="goToEdit('exam-result',false,3)">EXM20260004</span></td><td>苍穹开发认证考试</td><td>认证考试</td><td>120</td><td>72</td><td><span class="status-tag pending">进行中</span></td><td>王雪儿</td><td class="col-action"><a class="btn-text" style="font-size:12px;" onclick="goToEdit('exam-result',false,3)">查看</a></td></tr>
+                <tr><td><span class="link-cell" onclick="goToEdit('exam-result',false,4)">EXM20260005</span></td><td>敏捷开发方法论测验</td><td>课程考试</td><td>100</td><td>60</td><td><span class="status-tag approved">已归档</span></td><td>陈静</td><td class="col-action"><a class="btn-text" style="font-size:12px;" onclick="goToEdit('exam-result',false,4)">查看</a></td></tr>
+                <tr><td><span class="link-cell" onclick="goToEdit('exam-result',false,5)">EXM20260006</span></td><td>新员工入职考核</td><td>学习计划考试</td><td>100</td><td>60</td><td><span class="status-tag approved">已归档</span></td><td>张伟</td><td class="col-action"><a class="btn-text" style="font-size:12px;" onclick="goToEdit('exam-result',false,5)">查看</a></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ========== 考试结果 - 详情页 ========== -->
+      <div class="page-content" id="page-exam-result-edit">
+        <div class="breadcrumb-bar">
+          <span class="back-btn" onclick="backToList('exam-result')">← 返回列表</span>
+          <span class="bc-sep">/</span>
+          <span class="bc-current">考试结果 - 详情</span>
+        </div>
+        <div class="action-bar">
+          <button class="btn btn-secondary" onclick="showToast('已导出')">导出</button>
+          <button class="btn btn-text" onclick="showToast('打印')">打印</button>
+        </div>
+        <div class="scroll-area">
+
+          <!-- 考试基本信息 -->
+          <div class="form-card">
+            <div class="form-card-header"><span class="form-card-indicator"></span><span class="form-card-title">考试基本信息</span></div>
+            <div class="form-body">
+              <div class="form-grid col-3">
+                <div class="form-field"><label>云学堂安排考试ID</label><input class="input-box input-readonly" value="" readonly data-field="examId"></div>
+                <div class="form-field"><label>状态</label><input class="input-box input-readonly" value="" readonly data-field="status"></div>
+                <div class="form-field"><label>考试名称</label><input class="input-box input-readonly" value="" readonly data-field="examName"></div>
+                <div class="form-field"><label>考试类型</label><input class="input-box input-readonly" value="" readonly data-field="examType"></div>
+                <div class="form-field"><label>试卷总分</label><input class="input-box input-readonly" value="" readonly data-field="totalScore"></div>
+                <div class="form-field"><label>通过分</label><input class="input-box input-readonly" value="" readonly data-field="passScore"></div>
+                <div class="form-field full"><label>考试说明</label><input class="input-box input-readonly" value="" readonly data-field="examDesc"></div>
+                <div class="form-field"><label>考试安排人</label><input class="input-box input-readonly" value="" readonly data-field="arranger"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 参与考试人员 -->
+          <div class="form-card">
+            <div class="form-card-header"><span class="form-card-indicator"></span><span class="form-card-title">参与考试人员</span></div>
+            <div class="form-body">
+              <div class="list-page-bar" style="padding:0 0 8px;">
+                <div class="lpb-left">共 5 人</div>
+                <div class="lpb-right"><span style="font-size:13px;color:#555555;">通过 <strong style="color:#33CC00;">4</strong> 人 / 未通过 <strong style="color:#FF0000;">1</strong> 人</span></div>
+              </div>
+              <table class="data-table" style="border:1px solid #D7D7D7;">
+                <thead><tr><th style="width:50px;">序号</th><th>员工ID</th><th>开始时间</th><th>交卷时间</th><th>得分</th><th>是否通过</th><th>试卷附件</th></tr></thead>
+                <tbody>
+                  <tr><td>1</td><td>EMP2025038</td><td>2026-03-01 09:00</td><td>2026-03-01 10:25</td><td>85</td><td><span class="status-tag approved">通过</span></td><td><a class="link-cell" onclick="showToast('预览试卷附件')">查看试卷</a></td></tr>
+                  <tr><td>2</td><td>EMP2025042</td><td>2026-03-01 09:00</td><td>2026-03-01 10:48</td><td>92</td><td><span class="status-tag approved">通过</span></td><td><a class="link-cell" onclick="showToast('预览试卷附件')">查看试卷</a></td></tr>
+                  <tr><td>3</td><td>EMP2025045</td><td>2026-03-01 09:00</td><td>2026-03-01 10:15</td><td>78</td><td><span class="status-tag approved">通过</span></td><td><a class="link-cell" onclick="showToast('预览试卷附件')">查看试卷</a></td></tr>
+                  <tr><td>4</td><td>EMP2025050</td><td>2026-03-01 09:00</td><td>2026-03-01 10:30</td><td>55</td><td><span class="status-tag rejected">未通过</span></td><td><a class="link-cell" onclick="showToast('预览试卷附件')">查看试卷</a></td></tr>
+                  <tr><td>5</td><td>EMP2025052</td><td>2026-03-01 09:00</td><td>2026-03-01 10:20</td><td>88</td><td><span class="status-tag approved">通过</span></td><td><a class="link-cell" onclick="showToast('预览试卷附件')">查看试卷</a></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </div>
+      </div>
 
     </div><!-- /content-area -->
   </div><!-- /main-area -->
@@ -1230,15 +2141,155 @@ body {
   </div>
 </div>
 
+<!-- 人员选择弹窗 -->
+<div class="modal-mask" id="kd-person-modal" style="display:none;">
+  <div class="modal modal-lg">
+    <div class="modal-header">
+      <span class="modal-title">选择参训人员</span>
+      <span class="modal-close" onclick="closePersonPicker()">✕</span>
+    </div>
+    <div class="modal-body" style="padding:0;">
+      <div class="person-picker">
+        <!-- 左侧：维度筛选 -->
+        <div class="picker-filter">
+          <div class="pf-label">公司</div>
+          <select><option value="">全部</option><option>金蝶软件（中国）</option><option>金蝶医疗软件</option><option>金蝶中间件</option><option>金蝶天燕云计算</option></select>
+          <div class="pf-label">部门</div>
+          <select><option value="">全部</option><option>产品研发中心</option><option>基础平台部</option><option>应用产品部</option><option>设计体验部</option><option>信息安全部</option><option>市场营销中心</option><option>人力资源中心</option></select>
+          <div class="pf-checkbox"><input type="checkbox" id="pf-subdept"><span>含子部门</span></div>
+          <div class="pf-label">岗位</div>
+          <select><option value="">全部</option><option>高级产品经理</option><option>产品经理</option><option>后端开发工程师</option><option>前端开发工程师</option><option>测试工程师</option><option>UI设计师</option><option>项目经理</option><option>架构师</option><option>安全工程师</option></select>
+          <div class="pf-label">一级体系</div>
+          <select><option value="">全部</option><option>技术研发体系</option><option>产品设计体系</option><option>市场运营体系</option></select>
+          <div class="pf-label">二级体系</div>
+          <select><option value="">全部</option><option>基础架构</option><option>云原生平台</option><option>苍穹建模</option><option>设计语言</option></select>
+          <div class="pf-label">岗位序列</div>
+          <select><option value="">全部</option><option>技术序列</option><option>产品序列</option><option>市场序列</option><option>管理序列</option></select>
+          <div class="pf-label">岗位子序列</div>
+          <select><option value="">全部</option><option>前端开发</option><option>后端开发</option><option>测试质量</option><option>架构</option></select>
+          <div class="pf-label">方向</div>
+          <select><option value="">全部</option><option>Web前端</option><option>移动端</option><option>服务端</option><option>数据中台</option></select>
+          <div class="pf-label">所属业务</div>
+          <select><option value="">全部</option><option>苍穹云平台</option><option>星瀚企业级</option><option>精斗云小微</option></select>
+          <div class="pf-label">所属子业务</div>
+          <select><option value="">全部</option><option>苍穹标准版</option><option>苍穹专业版</option><option>星瀚财务云</option></select>
+          <div class="pf-checkbox"><input type="checkbox" id="pf-cadre"><span>含干部</span></div>
+          <div class="pf-checkbox"><input type="checkbox" id="pf-mainpost" checked><span>仅主岗</span></div>
+          <div class="pf-label">待开展培训</div>
+          <select><option value="">全部</option><option>苍穹平台开发实战</option><option>新员工入职培训</option><option>信息安全合规培训</option></select>
+        </div>
+        <!-- 右侧：搜索+人员列表 -->
+        <div class="picker-result">
+          <div class="picker-search">
+            <input type="text" placeholder="输入员工姓名/工号搜索" id="pf-search" oninput="searchPerson()">
+            <button class="btn btn-primary btn-sm" onclick="searchPerson()">搜索</button>
+          </div>
+          <div class="picker-table-wrap">
+            <table class="picker-table">
+              <thead><tr><th class="col-check"><input type="checkbox" onclick="toggleAllPerson(this)"></th><th>员工ID</th><th>姓名</th><th>部门</th><th>岗位</th><th>公司</th></tr></thead>
+              <tbody id="pf-tbody"></tbody>
+            </table>
+          </div>
+          <div class="picker-info">已选 <strong id="pf-selected-count">0</strong> 人</div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closePersonPicker()">取消</button>
+      <button class="btn btn-primary" onclick="confirmPersonPicker()">确定</button>
+    </div>
+  </div>
+</div>
+
 <!-- Toast -->
 <div class="toast" id="kd-toast"></div>
 
 <script>
 /* ========== 页面切换 + 动态 Tab 管理 ========== */
-var tabLabels = { plan: '学习方案设置', demand: '部门培训需求申请' };
+var tabLabels = { plan: '学习方案设置', demand: '部门培训需求申请', 'annual-plan': '年度培训计划记录', 'budget-config': '培训预算科目配置', 'demand-project': '培训需求立项', 'plan-project': '培训计划立项', 'unplanned-project': '计划外培训立项', 'employee-profile': '培训结果', 'exam-result': '考试结果' };
+
+var listData = {
+  'plan': [
+    {name:'2026年新员工必修培训方案',category:'10',status:'active',date:'2026-01-01',intro:'面向2026年入职的新员工，涵盖苍穹平台基础、开发规范、信息安全等必修课程。'},
+    {name:'产品经理能力提升培训方案',category:'10',status:'active',date:'2026-03-01',intro:'提升产品经理的需求分析、项目管理和跨部门协作能力。'},
+    {name:'新员工入职线下培训方案',category:'11',status:'active',date:'2026-01-15',intro:'新员工线下集训，含企业文化、团队建设和岗位基础培训。'},
+    {name:'苍穹平台开发认证培训方案',category:'10',status:'draft',date:'2026-06-01',intro:'苍穹平台开发技能认证培训，含建模、API和开发规范。'},
+    {name:'信息安全意识必修培训',category:'10',status:'inactive',date:'2025-07-01',intro:'全员信息安全意识培训，含数据安全和合规要求。'},
+    {name:'中层管理干部沙盘培训方案',category:'10',status:'active',date:'2026-04-01',intro:'中层管理干部管理能力提升，含战略思维和团队管理。'},
+    {name:'敏捷开发实战培训方案',category:'11',status:'draft',date:'2026-09-01',intro:'敏捷开发方法论与实战，含Scrum、看板和DevOps实践。'}
+  ],
+  'demand': [
+    {name:'苍穹平台开发实战培训',type:'internal-teacher',projType:'T01 - 技术类培训',projSub:'ST01 - 前端技术',needTime:'2026年9月',place:'深圳市南山区科技园金蝶大厦3楼培训室',teacher:'张明、李芳',hours:'16',content:'苍穹平台开发基础、开发规范与最佳实践、数据建模与API设计、开发实战演练',target:'掌握苍穹平台开发技能，能独立完成标准业务模块开发',scope:'产品研发中心后端开发工程师、前端开发工程师，共45人',transform:'培训后完成1个实战项目，由导师评审，通过后纳入项目组',remark:'需准备开发环境',fee:'5000.00'},
+    {name:'PMP项目管理认证培训',type:'external',projType:'T02 - 管理类培训',projSub:'ST03 - 项目管理',needTime:'2026年10月',place:'深圳市南山区科技园培训中心',teacher:'王芳',hours:'24',content:'PMBOK指南、项目整合管理、范围管理、时间管理、成本管理',target:'通过PMP认证考试',scope:'项目经理、产品经理，共20人',transform:'通过PMP认证考试并取得证书',remark:'',fee:'12000.00'},
+    {name:'新员工入职培训需求',type:'internal-teacher',projType:'T04 - 通用素质类',projSub:'',needTime:'2026年9月',place:'金蝶大厦2楼多功能厅',teacher:'人力资源团队',hours:'8',content:'企业文化、规章制度、IT系统使用、信息安全基础',target:'帮助新员工快速融入公司',scope:'2026年新入职员工，共30人',transform:'入职3个月内完成考核',remark:'含午餐',fee:'2000.00'},
+    {name:'前端技术能力提升培训',type:'external-teacher',projType:'T01 - 技术类培训',projSub:'ST01 - 前端技术',needTime:'2026年11月',place:'线上培训',teacher:'外部讲师（待定）',hours:'16',content:'React高级特性、性能优化、微前端架构、TypeScript实战',target:'提升前端开发团队的技术深度',scope:'基础平台部前端工程师，共18人',transform:'完成1个前端组件库贡献',remark:'',fee:'8000.00'},
+    {name:'信息安全合规培训',type:'internal-teacher',projType:'T01 - 技术类培训',projSub:'',needTime:'2026年10月',place:'金蝶大厦3楼培训室',teacher:'刘强',hours:'4',content:'信息安全合规要求、数据分类分级、安全开发规范、应急预案',target:'全员了解信息安全合规要求',scope:'全公司员工，共50人',transform:'通过安全合规考试',remark:'必修',fee:'1000.00'},
+    {name:'中层管理干部沙盘演练',type:'external-teacher',projType:'T02 - 管理类培训',projSub:'ST04 - 领导力',needTime:'2026年12月',place:'外部培训基地',teacher:'外部讲师（待定）',hours:'32',content:'战略规划、团队管理、冲突管理、决策沙盘',target:'提升中层管理干部的综合管理能力',scope:'各部门中层管理干部，共15人',transform:'完成管理改进计划并汇报',remark:'含住宿',fee:'20000.00'},
+    {name:'敏捷开发实战工作坊',type:'external-teacher',projType:'T01 - 技术类培训',projSub:'',needTime:'2026年11月',place:'金蝶大厦2楼',teacher:'外部讲师（待定）',hours:'16',content:'Scrum框架、看板方法、用户故事拆分、持续集成实践',target:'团队掌握敏捷开发方法',scope:'应用产品部开发团队，共12人',transform:'在项目中实施敏捷实践',remark:'',fee:'6000.00'}
+  ],
+  'annual-plan': [
+    {year:'2026',company:'金蝶软件（中国）有限公司',projName:'苍穹平台开发实战培训',type:'11',level:'10',desc:'提升苍穹平台开发能力，规范开发流程',target:'后端开发工程师、前端开发工程师',count:'45',month:'2026年9月',teacher:'张明、李芳',hours:'16',status:'已立项',locked:true,reward:'5000',lecture:'8000',review:'2000',external:'0',site:'3000',equipment:'1500',other:'500'},
+    {year:'2026',company:'金蝶软件（中国）有限公司',projName:'PMP项目管理认证培训',type:'10',level:'11',desc:'提升项目管理专业能力',target:'项目经理、产品经理',count:'20',month:'2026年10月',teacher:'王芳',hours:'24',status:'已立项',locked:true,reward:'0',lecture:'0',review:'0',external:'12000',site:'1000',equipment:'500',other:'500'},
+    {year:'2026',company:'金蝶医疗软件科技有限公司',projName:'新员工入职培训',type:'11',level:'12',desc:'帮助新员工快速融入公司',target:'2026年新入职员工',count:'30',month:'2026年9月',teacher:'人力资源团队',hours:'8',status:'未立项',locked:false,reward:'1000',lecture:'2000',review:'500',external:'0',site:'500',equipment:'0',other:'0'},
+    {year:'2026',company:'金蝶软件（中国）有限公司',projName:'中层管理干部沙盘演练',type:'12',level:'10',desc:'提升中层管理干部综合管理能力',target:'各部门中层管理干部',count:'15',month:'2026年12月',teacher:'外部讲师（待定）',hours:'32',status:'已立项',locked:true,reward:'0',lecture:'0',review:'0',external:'15000',site:'3000',equipment:'1500',other:'500'},
+    {year:'2026',company:'金蝶中间件有限公司',projName:'前端技术能力提升',type:'12',level:'11',desc:'提升前端开发团队技术深度',target:'基础平台部前端工程师',count:'18',month:'2026年11月',teacher:'外部讲师（待定）',hours:'16',status:'未立项',locked:false,reward:'0',lecture:'0',review:'0',external:'6000',site:'1000',equipment:'500',other:'0'},
+    {year:'2026',company:'金蝶软件（中国）有限公司',projName:'信息安全合规培训',type:'11',level:'11',desc:'全员了解信息安全合规要求',target:'全公司员工',count:'50',month:'2026年10月',teacher:'刘强',hours:'4',status:'已立项',locked:false,reward:'500',lecture:'1000',review:'0',external:'0',site:'500',equipment:'0',other:'0'},
+    {year:'2026',company:'金蝶天燕云计算股份有限公司',projName:'敏捷开发实战培训',type:'12',level:'12',desc:'团队掌握敏捷开发方法',target:'应用产品部开发团队',count:'12',month:'2026年11月',teacher:'外部讲师（待定）',hours:'16',status:'未立项',locked:false,reward:'0',lecture:'0',review:'0',external:'5000',site:'500',equipment:'500',other:'0'}
+  ],
+  'budget-config': [
+    {name:'课程开发奖励费',category:'inner',sort:'1'},
+    {name:'内部讲师课时费',category:'inner',sort:'2'},
+    {name:'课件评审费',category:'inner',sort:'3'},
+    {name:'外训费用',category:'external',sort:'4'},
+    {name:'场地费',category:'hire',sort:'5'},
+    {name:'设备费',category:'hire',sort:'6'},
+    {name:'其他费用',category:'hire',sort:'7'}
+  ],
+  'employee-profile': [
+    {empId:'EMP2025038',empName:'王雪儿',dept:'产品研发中心',post:'高级产品经理',company:'金蝶软件（中国）',entryDate:'2023-03-15',totalHours:'128',totalCredits:'24'},
+    {empId:'EMP2025042',empName:'李明',dept:'基础平台部',post:'后端开发工程师',company:'金蝶软件（中国）',entryDate:'2022-07-01',totalHours:'96',totalCredits:'18'},
+    {empId:'EMP2025045',empName:'陈静',dept:'基础平台部',post:'前端开发工程师',company:'金蝶软件（中国）',entryDate:'2023-01-10',totalHours:'72',totalCredits:'14'},
+    {empId:'EMP2025050',empName:'张伟',dept:'应用产品部',post:'产品经理',company:'金蝶软件（中国）',entryDate:'2021-05-20',totalHours:'160',totalCredits:'30'},
+    {empId:'EMP2025052',empName:'刘强',dept:'信息安全部',post:'安全工程师',company:'金蝶软件（中国）',entryDate:'2020-09-15',totalHours:'200',totalCredits:'36'},
+    {empId:'EMP2025060',empName:'孙丽',dept:'应用产品部',post:'测试工程师',company:'金蝶软件（中国）',entryDate:'2023-06-01',totalHours:'64',totalCredits:'12'},
+    {empId:'EMP2025070',empName:'郑明',dept:'基础平台部',post:'架构师',company:'金蝶软件（中国）',entryDate:'2019-03-01',totalHours:'240',totalCredits:'42'},
+    {empId:'EMP2025080',empName:'陈涛',dept:'基础平台部',post:'后端开发工程师',company:'金蝶医疗软件',entryDate:'2022-11-15',totalHours:'88',totalCredits:'16'}
+  ],
+  'unplanned-project': [
+    {projName:'应急安全响应专项培训',type:'12',level:'11',orgDept:'信息安全部',startDate:'2026-08-20',endDate:'2026-08-20',startTime:'09:00',endTime:'17:00',place:'金蝶大厦3楼培训室',hours:'8',content:'应急安全响应流程、安全事件分级、应急演练',reason:'近期安全事件频发，需要紧急培训',transform:'完成应急响应手册',scope:'信息安全部全员',reward:'0',lecture:'2000',review:'0',external:'0',site:'500',equipment:'0',other:'0'},
+    {projName:'新工具快速引入培训',type:'11',level:'12',orgDept:'基础平台部',startDate:'2026-09-10',endDate:'2026-09-10',startTime:'14:00',endTime:'17:00',place:'线上培训',hours:'3',content:'新开发工具使用、配置管理、最佳实践',reason:'引入新开发工具需快速培训团队',transform:'团队完成工具迁移',scope:'基础平台部开发团队',reward:'0',lecture:'0',review:'0',external:'3000',site:'0',equipment:'0',other:'0'},
+    {projName:'突发合规要求培训',type:'12',level:'10',orgDept:'科技部',startDate:'2026-07-15',endDate:'2026-07-15',startTime:'09:00',endTime:'12:00',place:'金蝶大厦2楼多功能厅',hours:'3',content:'新合规要求解读、实施要点、影响分析',reason:'监管部门发布新合规要求',transform:'完成合规自查报告',scope:'相关部门负责人',reward:'0',lecture:'1000',review:'0',external:'0',site:'500',equipment:'0',other:'0'}
+  ],
+  'exam-result': [
+    {examId:'EXM20260001',status:'已归档',examName:'苍穹平台开发基础认证',examType:'学习计划考试',totalScore:'100',passScore:'60',examDesc:'苍穹平台开发基础知识认证考试，涵盖建模、API设计、开发规范',arranger:'王雪儿'},
+    {examId:'EXM20260002',status:'已归档',examName:'项目管理基础测验',examType:'课程考试',totalScore:'100',passScore:'70',examDesc:'PMBOK基础概念与项目管理流程测验',arranger:'李明'},
+    {examId:'EXM20260003',status:'已归档',examName:'信息安全合规考试',examType:'学习计划考试',totalScore:'100',passScore:'80',examDesc:'信息安全合规要求、数据安全规范、应急预案考核',arranger:'刘强'},
+    {examId:'EXM20260004',status:'进行中',examName:'苍穹开发认证考试',examType:'认证考试',totalScore:'120',passScore:'72',examDesc:'苍穹平台开发能力认证，含理论与实操',arranger:'王雪儿'},
+    {examId:'EXM20260005',status:'已归档',examName:'敏捷开发方法论测验',examType:'课程考试',totalScore:'100',passScore:'60',examDesc:'Scrum框架、看板方法、用户故事拆分',arranger:'陈静'},
+    {examId:'EXM20260006',status:'已归档',examName:'新员工入职考核',examType:'学习计划考试',totalScore:'100',passScore:'60',examDesc:'企业文化、规章制度、IT系统使用考核',arranger:'张伟'}
+  ]
+};
+
+/* 侧边栏二级菜单展开/收起 */
+function toggleSubmenu(el) {
+  var isExpanded = el.classList.contains('expanded');
+  // 先关闭所有展开的子菜单
+  var all = document.querySelectorAll('.sidebar-item.has-submenu.expanded');
+  for (var i = 0; i < all.length; i++) all[i].classList.remove('expanded');
+  // 切换当前
+  if (!isExpanded) el.classList.add('expanded');
+}
+
+/* 关闭所有子菜单 */
+function closeAllSubmenus() {
+  var all = document.querySelectorAll('.sidebar-item.has-submenu.expanded');
+  for (var i = 0; i < all.length; i++) all[i].classList.remove('expanded');
+}
 
 function switchPage(name) {
   if (name === 'home') { goHome(); return; }
+  // 关闭二级菜单
+  closeAllSubmenus();
   // 侧边栏高亮
   setSidebarActive(name);
   // 创建或激活 tab
@@ -1260,7 +2311,11 @@ function switchPage(name) {
       }
     }
   }
-  showPage('page-' + name + '-list');
+  var targetPage;
+  if (name === 'demand-project') targetPage = 'page-demand-list';
+  else if (name === 'plan-project') targetPage = 'page-annual-plan-list';
+  else targetPage = 'page-' + name + '-list';
+  showPage(targetPage);
   resetScroll();
 }
 
@@ -1309,11 +2364,95 @@ function resetScroll() {
   if (sa) sa.scrollTop = 0;
 }
 
-/* 从列表页进入录入页 */
-function goToEdit(name) {
+/* 从列表页进入录入页（locked=true 时字段只读不可编辑，rowIdx 指定行数据） */
+function goToEdit(name, locked, rowIdx) {
   var pages = document.querySelectorAll('.page-content');
   for (var i = 0; i < pages.length; i++) {
     pages[i].classList.toggle('active', pages[i].id === 'page-' + name + '-edit');
+  }
+  var page = document.getElementById('page-' + name + '-edit');
+  if (page) {
+    /* 填充数据 */
+    var dataKey = (name === 'training-project') ? 'unplanned-project' : name;
+    if (rowIdx !== undefined && listData[dataKey] && listData[dataKey][rowIdx]) {
+      fillFormData(page, listData[dataKey][rowIdx]);
+    }
+    /* 计划外培训特殊处理 */
+    if (name === 'training-project') {
+      var planSel = page.querySelector('select[onchange*="togglePlanType"]');
+      if (planSel) { planSel.value = 'out'; togglePlanType(planSel); }
+      calcProjectBudget();
+    }
+    /* 锁定处理 */
+    var fields = page.querySelectorAll('input:not([type="checkbox"]):not([type="button"]), select, textarea');
+    for (var j = 0; j < fields.length; j++) {
+      var f = fields[j];
+      if (locked) { f.disabled = true; }
+      else if (f.classList.contains('input-readonly') || (f.readOnly === true && !f.classList.contains('lookup__input'))) { f.disabled = true; }
+      else { f.disabled = false; }
+    }
+    var bc = page.querySelector('.bc-current');
+    if (bc) bc.textContent = locked ? (bc.textContent.replace(/编辑|新增|查看（已锁定）/, '查看（已锁定）')) : (bc.textContent.replace(/查看（已锁定）|新增/, '编辑'));
+  }
+  var sa = document.querySelector('.page-content.active .scroll-area');
+  if (sa) sa.scrollTop = 0;
+}
+
+/* 将数据对象填充到录入页中带 data-field 属性的字段 */
+function fillFormData(page, data) {
+  for (var key in data) {
+    if (key === 'locked') continue;
+    var el = page.querySelector('[data-field="' + key + '"]');
+    if (!el) continue;
+    if (el.tagName === 'SELECT') {
+      for (var i = 0; i < el.options.length; i++) {
+        if (el.options[i].value === data[key] || el.options[i].textContent === data[key]) {
+          el.selectedIndex = i; break;
+        }
+      }
+    } else {
+      el.value = data[key];
+    }
+    el.disabled = false;
+  }
+  /* 触发预算计算 */
+  if (data.reward !== undefined) calcBudget();
+}
+
+/* 新增按钮：进入空表单录入页 */
+function newRecord(name) {
+  var pages = document.querySelectorAll('.page-content');
+  for (var i = 0; i < pages.length; i++) {
+    pages[i].classList.toggle('active', pages[i].id === 'page-' + name + '-edit');
+  }
+  var page = document.getElementById('page-' + name + '-edit');
+  if (page) {
+    // 清空可编辑 input（跳过只读字段如自动生成的ID等）
+    var inputs = page.querySelectorAll('input:not([type="checkbox"]):not([type="button"])');
+    for (var i = 0; i < inputs.length; i++) {
+      var f = inputs[i];
+      if (f.classList.contains('input-readonly')) continue;
+      f.value = '';
+      f.disabled = false;
+    }
+    // 清空 textarea
+    var tas = page.querySelectorAll('textarea');
+    for (var j = 0; j < tas.length; j++) { tas[j].value = ''; }
+    // select 重置为第一项（"请选择"或默认值）
+    var sels = page.querySelectorAll('select');
+    for (var k = 0; k < sels.length; k++) {
+      sels[k].selectedIndex = 0;
+      sels[k].disabled = false;
+    }
+    // 面包屑显示"新增"
+    var bc = page.querySelector('.bc-current');
+    if (bc) bc.textContent = bc.textContent.replace(/编辑|查看（已锁定）/, '新增');
+    // 计划外培训新增特殊处理
+    if (name === 'training-project') {
+      var planSel = page.querySelector('select[onchange*="togglePlanType"]');
+      if (planSel) { planSel.value = 'out'; togglePlanType(planSel); }
+      calcProjectBudget();
+    }
   }
   var sa = document.querySelector('.page-content.active .scroll-area');
   if (sa) sa.scrollTop = 0;
@@ -1327,6 +2466,50 @@ function backToList(name) {
   }
   var ls = document.querySelector('.page-content.active .list-scroll');
   if (ls) ls.scrollTop = 0;
+}
+
+/* 锁定/解锁年度培训计划 */
+function lockPlan(isLock) {
+  var page = document.getElementById('page-annual-plan-list');
+  if (!page) return;
+  var checks = page.querySelectorAll('.data-table tbody input[type="checkbox"]:checked');
+  if (checks.length === 0) { showToast('请先勾选要' + (isLock ? '锁定' : '解锁') + '的行'); return; }
+  showToast('已' + (isLock ? '锁定' : '解锁') + ' ' + checks.length + ' 条计划');
+}
+
+/* 格子页签切换（计划信息/培训预算） */
+function switchGridTab(tabEl, panelId) {
+  var card = tabEl.closest('.scroll-area') || tabEl.parentElement;
+  if (!card) return;
+  var tabs = card.querySelectorAll('.grid-tab');
+  var panels = card.querySelectorAll('.grid-tab-panel');
+  for (var i = 0; i < tabs.length; i++) tabs[i].classList.remove('active');
+  tabEl.classList.add('active');
+  for (var j = 0; j < panels.length; j++) panels[j].classList.remove('active');
+  var panel = document.getElementById(panelId);
+  if (panel) panel.classList.add('active');
+}
+
+/* 培训预算自动计算 */
+function calcBudget() {
+  var panel = document.getElementById('plan-budget-panel');
+  if (!panel) return;
+  var inputs = panel.querySelectorAll('input[type="number"]');
+  var vals = [];
+  for (var i = 0; i < inputs.length; i++) vals.push(parseFloat(inputs[i].value) || 0);
+  // 0:课程开发奖励费 1:内部讲师课时费 2:课件评审费 3:外训费用 4:场地费 5:设备费 6:其他费用
+  var inner = vals[0] + vals[1] + vals[2];
+  var external = vals[3];
+  var site = vals[4] + vals[5] + vals[6];
+  var total = inner + external + site;
+  var elInner = document.getElementById('sum-inner');
+  var elExt = document.getElementById('sum-external');
+  var elSite = document.getElementById('sum-site');
+  var elTotal = document.getElementById('sum-total');
+  if (elInner) elInner.textContent = '¥' + inner.toFixed(2);
+  if (elExt) elExt.textContent = '¥' + external.toFixed(2);
+  if (elSite) elSite.textContent = '¥' + site.toFixed(2);
+  if (elTotal) elTotal.textContent = '¥' + total.toFixed(2);
 }
 
 /* ========== Toast ========== */
@@ -1346,24 +2529,24 @@ var studyData = {
   exm: [['EXM001','需求分析期末考'],['EXM002','项目管理基础测验'],['EXM003','苍穹开发认证考试']],
   ofp: [['OFP001','2026新员工集训营（含线下课+考试）'],['OFP002','中层管理干部沙盘演练'],['OFP003','敏捷开发实战工作坊']]
 };
-function buildStudyRow() {
+function buildStudyRow(selOlc, selExm, selOfp, seq) {
   var tr = document.createElement('tr');
   tr.innerHTML =
     '<td class="col-checkbox"><input type="checkbox" class="study-check"></td>' +
     '<td><select class="entry-input"><option value="">请选择</option>' +
-    studyData.olc.map(function(c){return '<option value="'+c[0]+'">'+c[0]+' - '+c[1]+'</option>';}).join('') + '</select></td>' +
+    studyData.olc.map(function(c){return '<option value="'+c[0]+'"'+(selOlc===c[0]?' selected':'')+'>'+c[0]+' - '+c[1]+'</option>';}).join('') + '</select></td>' +
     '<td><select class="entry-input"><option value="">请选择</option>' +
-    studyData.exm.map(function(e){return '<option value="'+e[0]+'">'+e[0]+' - '+e[1]+'</option>';}).join('') + '</select></td>' +
+    studyData.exm.map(function(e){return '<option value="'+e[0]+'"'+(selExm===e[0]?' selected':'')+'>'+e[0]+' - '+e[1]+'</option>';}).join('') + '</select></td>' +
     '<td><select class="entry-input"><option value="">请选择</option>' +
-    studyData.ofp.map(function(p){return '<option value="'+p[0]+'">'+p[0]+' - '+p[1]+'</option>';}).join('') + '</select></td>' +
-    '<td><input class="entry-input" type="number" placeholder="顺序" min="1"></td>';
+    studyData.ofp.map(function(p){return '<option value="'+p[0]+'"'+(selOfp===p[0]?' selected':'')+'>'+p[0]+' - '+p[1]+'</option>';}).join('') + '</select></td>' +
+    '<td><input class="entry-input" type="number" placeholder="顺序" min="1"'+(seq?' value="'+seq+'"':'')+'></td>';
   return tr;
 }
 (function initStudyTable() {
   var tbody = document.getElementById('kd-study-tbody');
   if (!tbody) return;
-  tbody.appendChild(buildStudyRow());
-  tbody.appendChild(buildStudyRow());
+  tbody.appendChild(buildStudyRow('OLC001','EXM001','OFP001','1'));
+  tbody.appendChild(buildStudyRow('OLC002','EXM002','OFP002','2'));
 })();
 function addStudyRow() {
   var tbody = document.getElementById('kd-study-tbody');
@@ -1652,6 +2835,137 @@ function pickDate(y, m, d) { var inp = document.getElementById(dtTarget); if (in
 function pickOtherMonth(m, y, d) { dtCur = new Date(y, m-1, d); pickDate(y, m, d); }
 function closeDatePicker() { var m = document.getElementById('kd-date-modal'); if (m) m.classList.remove('show'); dtTarget = null; }
 
+/* ========== 人员选择弹窗 ========== */
+var personData = [
+  {id:'EMP2025038',name:'王雪儿',dept:'产品研发中心',post:'高级产品经理',company:'金蝶软件（中国）'},
+  {id:'EMP2025042',name:'李明',dept:'基础平台部',post:'后端开发工程师',company:'金蝶软件（中国）'},
+  {id:'EMP2025045',name:'陈静',dept:'基础平台部',post:'前端开发工程师',company:'金蝶软件（中国）'},
+  {id:'EMP2025050',name:'张伟',dept:'应用产品部',post:'产品经理',company:'金蝶软件（中国）'},
+  {id:'EMP2025052',name:'刘强',dept:'信息安全部',post:'安全工程师',company:'金蝶软件（中国）'},
+  {id:'EMP2025055',name:'赵敏',dept:'总经理办公室',post:'运营总监',company:'金蝶软件（中国）'},
+  {id:'EMP2025060',name:'孙丽',dept:'应用产品部',post:'测试工程师',company:'金蝶软件（中国）'},
+  {id:'EMP2025063',name:'周杰',dept:'市场营销中心',post:'市场经理',company:'金蝶软件（中国）'},
+  {id:'EMP2025068',name:'吴芳',dept:'人力资源中心',post:'HRBP',company:'金蝶软件（中国）'},
+  {id:'EMP2025070',name:'郑明',dept:'基础平台部',post:'架构师',company:'金蝶软件（中国）'},
+  {id:'EMP2025075',name:'冯雪',dept:'设计体验部',post:'UI设计师',company:'金蝶软件（中国）'},
+  {id:'EMP2025080',name:'陈涛',dept:'基础平台部',post:'后端开发工程师',company:'金蝶医疗软件'},
+  {id:'EMP2025085',name:'黄丽',dept:'应用产品部',post:'前端开发工程师',company:'金蝶中间件'},
+  {id:'EMP2025090',name:'杨军',dept:'产品研发中心',post:'项目经理',company:'金蝶软件（中国）'},
+  {id:'EMP2025095',name:'林丹',dept:'基础平台部',post:'测试工程师',company:'金蝶软件（中国）'}
+];
+var personSelected = {};
+
+function openPersonPicker() {
+  var modal = document.getElementById('kd-person-modal');
+  if (!modal) return;
+  personSelected = {};
+  // 获取已添加的人员ID，标记为已选
+  var tbody = document.getElementById('person-tbody');
+  if (tbody) {
+    var rows = tbody.querySelectorAll('tr');
+    for (var i = 0; i < rows.length; i++) {
+      var id = rows[i].querySelector('td:nth-child(2)').textContent;
+      personSelected[id] = true;
+    }
+  }
+  renderPersonTable(personData);
+  updatePickerCount();
+  var si = document.getElementById('pf-search');
+  if (si) si.value = '';
+  modal.style.display = 'flex';
+}
+
+function renderPersonTable(data) {
+  var tbody = document.getElementById('pf-tbody');
+  if (!tbody) return;
+  if (data.length === 0) { tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:24px 0;color:#AAAAAA;">未找到匹配的人员</td></tr>'; return; }
+  tbody.innerHTML = data.map(function(p) {
+    var checked = personSelected[p.id] ? ' checked' : '';
+    return '<tr><td class="col-check"><input type="checkbox"'+checked+' onclick="togglePerson(\''+p.id+'\')"></td><td>'+p.id+'</td><td>'+p.name+'</td><td>'+p.dept+'</td><td>'+p.post+'</td><td>'+p.company+'</td></tr>';
+  }).join('');
+}
+
+function togglePerson(id) {
+  if (personSelected[id]) delete personSelected[id];
+  else personSelected[id] = true;
+  updatePickerCount();
+}
+
+function toggleAllPerson(el) {
+  var tbody = document.getElementById('pf-tbody');
+  if (!tbody) return;
+  var checks = tbody.querySelectorAll('input[type="checkbox"]');
+  for (var i = 0; i < checks.length; i++) {
+    var id = checks[i].getAttribute('onclick').match(/'([^']+)'/);
+    if (id && el.checked) { personSelected[id[1]] = true; checks[i].checked = true; }
+    else if (id) { delete personSelected[id[1]]; checks[i].checked = false; }
+  }
+  updatePickerCount();
+}
+
+function updatePickerCount() {
+  var n = Object.keys(personSelected).length;
+  var el = document.getElementById('pf-selected-count');
+  if (el) el.textContent = n;
+}
+
+function searchPerson() {
+  var si = document.getElementById('pf-search');
+  var kw = si ? si.value.trim().toLowerCase() : '';
+  var filtered = personData.filter(function(p) {
+    return kw === '' || p.name.toLowerCase().indexOf(kw) >= 0 || p.id.toLowerCase().indexOf(kw) >= 0;
+  });
+  renderPersonTable(filtered);
+}
+
+function closePersonPicker() {
+  var modal = document.getElementById('kd-person-modal');
+  if (modal) modal.style.display = 'none';
+}
+
+function confirmPersonPicker() {
+  var tbody = document.getElementById('person-tbody');
+  if (!tbody) return;
+  // 清空现有列表，用选中的人员重建
+  tbody.innerHTML = '';
+  var seq = 0;
+  for (var i = 0; i < personData.length; i++) {
+    var p = personData[i];
+    if (personSelected[p.id]) {
+      seq++;
+      var tr = document.createElement('tr');
+      tr.innerHTML = '<td>'+seq+'</td><td>'+p.id+'</td><td>'+p.name+'</td><td>'+p.dept+'</td><td>'+p.post+'</td><td><a class="btn-text btn-text-danger" style="font-size:12px;" onclick="removePerson(this)">移除</a></td>';
+      tbody.appendChild(tr);
+    }
+  }
+  updatePersonCount();
+  closePersonPicker();
+  showToast('已添加 ' + seq + ' 名参训人员');
+}
+
+function removePerson(el) {
+  var tr = el.closest('tr');
+  if (!tr) return;
+  tr.remove();
+  // 重新排序
+  var tbody = document.getElementById('person-tbody');
+  if (tbody) {
+    var rows = tbody.querySelectorAll('tr');
+    for (var i = 0; i < rows.length; i++) {
+      var cells = rows[i].querySelectorAll('td');
+      if (cells.length > 0) cells[0].textContent = (i + 1);
+    }
+  }
+  updatePersonCount();
+  showToast('已移除');
+}
+
+function updatePersonCount() {
+  var tbody = document.getElementById('person-tbody');
+  var el = document.getElementById('person-count');
+  if (tbody && el) el.textContent = tbody.querySelectorAll('tr').length;
+}
+
 /* ========== 附件上传 ========== */
 var attSeq = 0;
 function uploadFile() {
@@ -1679,6 +2993,47 @@ function delAttach(el) {
     tbody.innerHTML = '<tr><td colspan="4" class="attach-empty">暂无附件，点击上方区域上传</td></tr>';
   }
   showToast('已删除附件');
+}
+
+/* ========== 培训立项辅助函数 ========== */
+function togglePlanType(sel) {
+  var demandField = document.getElementById('field-demand');
+  var planField = document.getElementById('field-plan');
+  if (sel.value === 'out') {
+    if (demandField) demandField.style.display = 'none';
+    if (planField) planField.style.display = 'none';
+  } else {
+    if (demandField) demandField.style.display = '';
+    if (planField) planField.style.display = '';
+  }
+}
+
+function calcProjectBudget() {
+  var page = document.getElementById('page-training-project-edit');
+  if (!page) return;
+  var get = function(f) { var el = page.querySelector('[data-field="'+f+'"]'); return el ? (parseFloat(el.value)||0) : 0; };
+  var lecture = get('reward')+get('lecture')+get('review');
+  var external = get('external');
+  var site = get('site')+get('equipment')+get('other');
+  var total = lecture+external+site;
+  var elL = document.getElementById('pb-lecture-total'); if (elL) elL.value = '¥'+lecture.toFixed(2);
+  var elE = document.getElementById('pb-external-total'); if (elE) elE.value = '¥'+external.toFixed(2);
+  var elS = document.getElementById('pb-site-total'); if (elS) elS.value = '¥'+site.toFixed(2);
+  var elT = document.getElementById('pb-grand-total'); if (elT) elT.textContent = '¥'+total.toFixed(2);
+}
+
+function goToProjectEdit(source) {
+  showPage('page-training-project-edit');
+  var bc = document.querySelector('#page-training-project-edit .bc-current');
+  if (bc) bc.textContent = '培训立项 - 新增';
+  // 计划内培训默认显示需求/计划字段
+  var planSel = document.querySelector('#page-training-project-edit select[onchange*="togglePlanType"]');
+  if (planSel) { planSel.value = 'in'; togglePlanType(planSel); }
+  resetScroll();
+}
+
+function historyBack() {
+  goHome();
 }
 
 /* ========== 遮罩点击关闭 ========== */
