@@ -629,7 +629,7 @@ body {
                   </div>
                   <div class="quick-entry-label">考试结果</div>
                 </div>
-                <div class="quick-add" onclick="showToast('添加快捷功能（原型演示）')">
+                <div class="quick-add" onclick="showToast('添加快捷功能')">
                   <div class="quick-add-box">+</div>
                   <div class="quick-add-label">添加</div>
                 </div>
@@ -804,7 +804,7 @@ body {
         </div>
         <!-- 操作栏 -->
         <div class="action-bar">
-          <button class="btn btn-primary" onclick="showToast('学习方案已保存（原型演示）')">保存</button>
+          <button class="btn btn-primary" onclick="showToast('学习方案已保存')">保存</button>
 
           <button class="btn btn-text" onclick="showToast('已提交')">提交</button>
         </div>
@@ -1059,7 +1059,6 @@ body {
                 <th>所属部门</th>
                 <th>申请人</th>
                 <th>状态</th>
-                <th>立项状态</th>
                 <th class="col-action">操作</th>
               </tr></thead>
               <tbody>
@@ -1073,8 +1072,7 @@ body {
                   <td>产品研发中心</td>
                   <td>王雪儿</td>
                   <td><span class="status-tag pending">待审批</span></td>
-                  <td><span class="status-tag approved">已立项</span></td>
-                  <td class="col-action"><a class="btn-text" style="font-size:12px;" onclick="goToEdit('demand',false,0)">编辑</a> <span style="font-size:12px;color:#33CC00;">已立项</span></td>
+                  <td class="col-action"><a class="btn-text" style="font-size:12px;" onclick="goToEdit('demand',false,0)">编辑</a></td>
                 </tr>
                 <tr>
                   <td class="col-checkbox"><input type="checkbox"></td>
@@ -1086,8 +1084,7 @@ body {
                   <td>项目管理部</td>
                   <td>李明</td>
                   <td><span class="status-tag approved">已通过</span></td>
-                  <td><span class="status-tag approved">已立项</span></td>
-                  <td class="col-action"><a class="btn-text" style="font-size:12px;" onclick="goToEdit('demand',false,1)">查看</a> <span style="font-size:12px;color:#33CC00;">已立项</span></td>
+                  <td class="col-action"><a class="btn-text" style="font-size:12px;" onclick="goToEdit('demand',false,1)">查看</a></td>
                 </tr>
                 <tr>
                   <td class="col-checkbox"><input type="checkbox"></td>
@@ -1099,8 +1096,7 @@ body {
                   <td>人力资源中心</td>
                   <td>张伟</td>
                   <td><span class="status-tag approved">已通过</span></td>
-                  <td><span class="status-tag approved">已立项</span></td>
-                  <td class="col-action"><a class="btn-text" style="font-size:12px;" onclick="goToEdit('demand',false,2)">查看</a> <span style="font-size:12px;color:#33CC00;">已立项</span></td>
+                  <td class="col-action"><a class="btn-text" style="font-size:12px;" onclick="goToEdit('demand',false,2)">查看</a></td>
                 </tr>
                 <tr>
                   <td class="col-checkbox"><input type="checkbox"></td>
@@ -1112,8 +1108,7 @@ body {
                   <td>基础平台部</td>
                   <td>陈静</td>
                   <td><span class="status-tag pending">待审批</span></td>
-                  <td><span class="status-tag pending">未立项</span></td>
-                  <td class="col-action"><a class="btn-text" style="font-size:12px;" onclick="goToEdit('demand',false,3)">编辑</a> <a class="btn-text" style="font-size:12px;" onclick="goToProjectEdit('demand')">培训立项</a></td>
+                  <td class="col-action"><a class="btn-text" style="font-size:12px;" onclick="goToEdit('demand',false,3)">编辑</a></td>
                 </tr>
                 <tr>
                   <td class="col-checkbox"><input type="checkbox"></td>
@@ -1125,8 +1120,7 @@ body {
                   <td>信息安全部</td>
                   <td>刘强</td>
                   <td><span class="status-tag rejected">已驳回</span></td>
-                  <td><span class="status-tag pending">未立项</span></td>
-                  <td class="col-action"><a class="btn-text" style="font-size:12px;" onclick="goToEdit('demand',false,4)">编辑</a> <a class="btn-text" style="font-size:12px;" onclick="goToProjectEdit('demand')">培训立项</a></td>
+                  <td class="col-action"><a class="btn-text" style="font-size:12px;" onclick="goToEdit('demand',false,4)">编辑</a></td>
                 </tr>
                 <tr>
                   <td class="col-checkbox"><input type="checkbox"></td>
@@ -1138,8 +1132,7 @@ body {
                   <td>总经理办公室</td>
                   <td>赵敏</td>
                   <td><span class="status-tag approved">已通过</span></td>
-                  <td><span class="status-tag pending">未立项</span></td>
-                  <td class="col-action"><a class="btn-text" style="font-size:12px;" onclick="goToEdit('demand',false,5)">查看</a> <a class="btn-text" style="font-size:12px;" onclick="goToProjectEdit('demand')">培训立项</a></td>
+                  <td class="col-action"><a class="btn-text" style="font-size:12px;" onclick="goToEdit('demand',false,5)">查看</a></td>
                 </tr>
                 <tr>
                   <td class="col-checkbox"><input type="checkbox"></td>
@@ -1151,8 +1144,7 @@ body {
                   <td>应用产品部</td>
                   <td>孙丽</td>
                   <td><span class="status-tag pending">待审批</span></td>
-                  <td><span class="status-tag pending">未立项</span></td>
-                  <td class="col-action"><a class="btn-text" style="font-size:12px;" onclick="goToEdit('demand',false,6)">编辑</a> <a class="btn-text" style="font-size:12px;" onclick="goToProjectEdit('demand')">培训立项</a></td>
+                  <td class="col-action"><a class="btn-text" style="font-size:12px;" onclick="goToEdit('demand',false,6)">编辑</a></td>
                 </tr>
               </tbody>
             </table>
@@ -1170,7 +1162,7 @@ body {
         </div>
         <!-- 操作栏 -->
         <div class="action-bar">
-          <button class="btn btn-primary" onclick="showToast('培训需求已提交，进入审批流程（原型演示）')">提交</button>
+          <button class="btn btn-primary" onclick="showToast('培训需求已提交，进入审批流程')">提交</button>
 
           <button class="btn btn-text" onclick="showToast('草稿已保存')">存草稿</button>
         </div>
@@ -1324,6 +1316,169 @@ body {
         </div><!-- /scroll-area -->
       </div><!-- /page-demand-edit -->
 
+      <!-- ========== 培训需求立项列表页 ========== -->
+      <div class="page-content" id="page-demand-project-list">
+        <!-- 过滤面板 -->
+        <div class="filter-panel">
+          <div class="filter-row">
+            <span class="filter-label">流程单号</span>
+            <input class="filter-input" type="text" placeholder="请输入单号" style="width:180px;">
+            <span class="filter-label">项目名称</span>
+            <input class="filter-input" type="text" placeholder="请输入项目名称" style="width:200px;">
+            <span class="filter-label">培训类型</span>
+            <select class="filter-input select-style" style="width:140px;">
+              <option value="">全部</option>
+              <option value="external">外训</option>
+              <option value="internal-teacher">内部讲师内训</option>
+              <option value="external-teacher">外部讲师内训</option>
+            </select>
+            <span class="filter-label">状态</span>
+            <select class="filter-input select-style" style="width:120px;">
+              <option value="">全部</option>
+              <option value="draft">草稿</option>
+              <option value="pending">待审批</option>
+              <option value="approved">已通过</option>
+              <option value="rejected">已驳回</option>
+            </select>
+            <button class="btn btn-primary" style="margin-left:auto;" onclick="showToast('查询完成')">查询</button>
+            <button class="btn btn-secondary" onclick="showToast('已重置')">重置</button>
+          </div>
+        </div>
+        <!-- 工具栏 -->
+        <div class="list-toolbar">
+          <div class="toolbar-left">
+            <button class="btn btn-primary" onclick="newRecord('demand')">+ 新增</button>
+            <div class="toolbar-divider"></div>
+            <button class="btn btn-secondary">导出</button>
+            <button class="btn btn-secondary">刷新</button>
+          </div>
+        </div>
+        <!-- 数据表格 -->
+        <div class="list-scroll">
+          <!-- 分页栏：左条数 / 右翻页 -->
+          <div class="list-page-bar">
+            <div class="lpb-left">共 7 条</div>
+            <div class="lpb-right">
+              <button class="page-btn">&lt;</button>
+              <input class="page-input" value="1">
+              <span class="page-info">/ 1 页</span>
+              <button class="page-btn">&gt;</button>
+              <span class="page-size">20条/页</span>
+            </div>
+          </div>
+          <div class="table-container">
+            <table class="data-table">
+              <thead><tr>
+                <th class="col-checkbox"><input type="checkbox"></th>
+                <th>流程单号</th>
+                <th>培训项目名称</th>
+                <th>培训类型</th>
+                <th>需求时间</th>
+                <th>申请日期</th>
+                <th>所属部门</th>
+                <th>申请人</th>
+                <th>状态</th>
+                <th>立项状态</th>
+                <th class="col-action">操作</th>
+              </tr></thead>
+              <tbody>
+                <tr>
+                  <td class="col-checkbox"><input type="checkbox"></td>
+                  <td><span class="link-cell" onclick="goToEdit('demand',false,0)">TRN-20260812-0001</span></td>
+                  <td>苍穹平台开发实战培训</td>
+                  <td>内部讲师内训</td>
+                  <td>2026年9月</td>
+                  <td>2026-08-12</td>
+                  <td>产品研发中心</td>
+                  <td>王雪儿</td>
+                  <td><span class="status-tag pending">待审批</span></td>
+                  <td><span class="status-tag approved">已立项</span></td>
+                  <td class="col-action"><a class="btn-text" style="font-size:12px;" onclick="goToEdit('demand',false,0)">编辑</a> <span style="font-size:12px;color:#33CC00;">已立项</span></td>
+                </tr>
+                <tr>
+                  <td class="col-checkbox"><input type="checkbox"></td>
+                  <td><span class="link-cell" onclick="goToEdit('demand',false,1)">TRN-20260810-0007</span></td>
+                  <td>PMP项目管理认证培训</td>
+                  <td>外训</td>
+                  <td>2026年10月</td>
+                  <td>2026-08-10</td>
+                  <td>项目管理部</td>
+                  <td>李明</td>
+                  <td><span class="status-tag approved">已通过</span></td>
+                  <td><span class="status-tag approved">已立项</span></td>
+                  <td class="col-action"><a class="btn-text" style="font-size:12px;" onclick="goToEdit('demand',false,1)">查看</a> <span style="font-size:12px;color:#33CC00;">已立项</span></td>
+                </tr>
+                <tr>
+                  <td class="col-checkbox"><input type="checkbox"></td>
+                  <td><span class="link-cell" onclick="goToEdit('demand',false,2)">TRN-20260808-0012</span></td>
+                  <td>新员工入职培训需求</td>
+                  <td>内部讲师内训</td>
+                  <td>2026年9月</td>
+                  <td>2026-08-08</td>
+                  <td>人力资源中心</td>
+                  <td>张伟</td>
+                  <td><span class="status-tag approved">已通过</span></td>
+                  <td><span class="status-tag approved">已立项</span></td>
+                  <td class="col-action"><a class="btn-text" style="font-size:12px;" onclick="goToEdit('demand',false,2)">查看</a> <span style="font-size:12px;color:#33CC00;">已立项</span></td>
+                </tr>
+                <tr>
+                  <td class="col-checkbox"><input type="checkbox"></td>
+                  <td><span class="link-cell" onclick="goToEdit('demand',false,3)">TRN-20260805-0023</span></td>
+                  <td>前端技术能力提升培训</td>
+                  <td>外部讲师内训</td>
+                  <td>2026年11月</td>
+                  <td>2026-08-05</td>
+                  <td>基础平台部</td>
+                  <td>陈静</td>
+                  <td><span class="status-tag pending">待审批</span></td>
+                  <td><span class="status-tag pending">未立项</span></td>
+                  <td class="col-action"><a class="btn-text" style="font-size:12px;" onclick="goToEdit('demand',false,3)">编辑</a> <a class="btn-text" style="font-size:12px;" onclick="goToProjectEdit('demand')">培训立项</a></td>
+                </tr>
+                <tr>
+                  <td class="col-checkbox"><input type="checkbox"></td>
+                  <td><span class="link-cell" onclick="goToEdit('demand',false,4)">TRN-20260801-0035</span></td>
+                  <td>信息安全合规培训</td>
+                  <td>内部讲师内训</td>
+                  <td>2026年10月</td>
+                  <td>2026-08-01</td>
+                  <td>信息安全部</td>
+                  <td>刘强</td>
+                  <td><span class="status-tag rejected">已驳回</span></td>
+                  <td><span class="status-tag pending">未立项</span></td>
+                  <td class="col-action"><a class="btn-text" style="font-size:12px;" onclick="goToEdit('demand',false,4)">编辑</a> <a class="btn-text" style="font-size:12px;" onclick="goToProjectEdit('demand')">培训立项</a></td>
+                </tr>
+                <tr>
+                  <td class="col-checkbox"><input type="checkbox"></td>
+                  <td><span class="link-cell" onclick="goToEdit('demand',false,5)">TRN-20260728-0041</span></td>
+                  <td>中层管理干部沙盘演练</td>
+                  <td>外部讲师内训</td>
+                  <td>2026年12月</td>
+                  <td>2026-07-28</td>
+                  <td>总经理办公室</td>
+                  <td>赵敏</td>
+                  <td><span class="status-tag approved">已通过</span></td>
+                  <td><span class="status-tag pending">未立项</span></td>
+                  <td class="col-action"><a class="btn-text" style="font-size:12px;" onclick="goToEdit('demand',false,5)">查看</a> <a class="btn-text" style="font-size:12px;" onclick="goToProjectEdit('demand')">培训立项</a></td>
+                </tr>
+                <tr>
+                  <td class="col-checkbox"><input type="checkbox"></td>
+                  <td><span class="link-cell" onclick="goToEdit('demand',false,6)">TRN-20260720-0056</span></td>
+                  <td>敏捷开发实战工作坊</td>
+                  <td>外部讲师内训</td>
+                  <td>2026年11月</td>
+                  <td>2026-07-20</td>
+                  <td>应用产品部</td>
+                  <td>孙丽</td>
+                  <td><span class="status-tag pending">待审批</span></td>
+                  <td><span class="status-tag pending">未立项</span></td>
+                  <td class="col-action"><a class="btn-text" style="font-size:12px;" onclick="goToEdit('demand',false,6)">编辑</a> <a class="btn-text" style="font-size:12px;" onclick="goToProjectEdit('demand')">培训立项</a></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
       <!-- ========== 年度培训计划记录 - 列表页 ========== -->
       <div class="page-content" id="page-annual-plan-list">
         <div class="filter-panel">
@@ -1334,8 +1489,6 @@ body {
             <input class="filter-input" type="text" placeholder="请输入" style="width:180px;">
             <span class="filter-label">培训类型</span>
             <select class="filter-input select-style" style="width:140px;"><option value="">全部</option><option>10-外训</option><option>11-内部讲师内训</option><option>12-外聘讲师内训</option></select>
-            <span class="filter-label">立项状态</span>
-            <select class="filter-input select-style" style="width:120px;"><option value="">全部</option><option>未立项</option><option>已立项</option></select>
             <button class="btn btn-primary" style="margin-left:auto;">查询</button>
             <button class="btn btn-secondary">重置</button>
           </div>
@@ -1363,15 +1516,15 @@ body {
           </div>
           <div class="table-container">
             <table class="data-table">
-              <thead><tr><th class="col-checkbox"><input type="checkbox"></th><th>日历年</th><th>公司</th><th>培训项目</th><th>培训类型</th><th>培训级别</th><th>计划人数</th><th>计划月份</th><th>培训课时</th><th>立项状态</th><th>锁定状态</th><th class="col-action">操作</th></tr></thead>
+              <thead><tr><th class="col-checkbox"><input type="checkbox"></th><th>日历年</th><th>公司</th><th>培训项目</th><th>培训类型</th><th>培训级别</th><th>计划人数</th><th>计划月份</th><th>培训课时</th><th>锁定状态</th><th class="col-action">操作</th></tr></thead>
               <tbody>
-                <tr><td class="col-checkbox"><input type="checkbox"></td><td><span class="link-cell" onclick="goToEdit('annual-plan',true,0)">2026</span></td><td>金蝶软件（中国）</td><td>苍穹平台开发实战培训</td><td>11-内部讲师内训</td><td>10-集团级</td><td>45</td><td>2026年9月</td><td>16</td><td><span class="status-tag approved">已立项</span></td><td><span class="status-tag active">已锁定</span></td><td class="col-action"><a class="btn-text" style="font-size:12px;" onclick="goToEdit('annual-plan',true,0)">查看</a> <span style="font-size:12px;color:#33CC00;">已立项</span></td></tr>
-                <tr><td class="col-checkbox"><input type="checkbox"></td><td><span class="link-cell" onclick="goToEdit('annual-plan',true,1)">2026</span></td><td>金蝶软件（中国）</td><td>PMP项目管理认证培训</td><td>10-外训</td><td>11-公司级</td><td>20</td><td>2026年10月</td><td>24</td><td><span class="status-tag approved">已立项</span></td><td><span class="status-tag active">已锁定</span></td><td class="col-action"><a class="btn-text" style="font-size:12px;" onclick="goToEdit('annual-plan',true,1)">查看</a> <span style="font-size:12px;color:#33CC00;">已立项</span></td></tr>
-                <tr><td class="col-checkbox"><input type="checkbox"></td><td><span class="link-cell" onclick="goToEdit('annual-plan',false,2)">2026</span></td><td>金蝶医疗软件</td><td>新员工入职培训</td><td>11-内部讲师内训</td><td>12-部门级</td><td>30</td><td>2026年9月</td><td>8</td><td><span class="status-tag pending">未立项</span></td><td><span class="status-tag draft">未锁定</span></td><td class="col-action"><a class="btn-text" style="font-size:12px;" onclick="goToEdit('annual-plan',false,2)">编辑</a> <a class="btn-text" style="font-size:12px;" onclick="goToProjectEdit('plan')">培训立项</a></td></tr>
-                <tr><td class="col-checkbox"><input type="checkbox"></td><td><span class="link-cell" onclick="goToEdit('annual-plan',true,3)">2026</span></td><td>金蝶软件（中国）</td><td>中层管理干部沙盘演练</td><td>12-外聘讲师内训</td><td>10-集团级</td><td>15</td><td>2026年12月</td><td>32</td><td><span class="status-tag approved">已立项</span></td><td><span class="status-tag active">已锁定</span></td><td class="col-action"><a class="btn-text" style="font-size:12px;" onclick="goToEdit('annual-plan',true,3)">查看</a> <span style="font-size:12px;color:#33CC00;">已立项</span></td></tr>
-                <tr><td class="col-checkbox"><input type="checkbox"></td><td><span class="link-cell" onclick="goToEdit('annual-plan',false,4)">2026</span></td><td>金蝶中间件</td><td>前端技术能力提升</td><td>12-外聘讲师内训</td><td>11-公司级</td><td>18</td><td>2026年11月</td><td>16</td><td><span class="status-tag pending">未立项</span></td><td><span class="status-tag draft">未锁定</span></td><td class="col-action"><a class="btn-text" style="font-size:12px;" onclick="goToEdit('annual-plan',false,4)">编辑</a> <a class="btn-text" style="font-size:12px;" onclick="goToProjectEdit('plan')">培训立项</a></td></tr>
-                <tr><td class="col-checkbox"><input type="checkbox"></td><td><span class="link-cell" onclick="goToEdit('annual-plan',false,5)">2026</span></td><td>金蝶软件（中国）</td><td>信息安全合规培训</td><td>11-内部讲师内训</td><td>11-公司级</td><td>50</td><td>2026年10月</td><td>4</td><td><span class="status-tag approved">已立项</span></td><td><span class="status-tag draft">未锁定</span></td><td class="col-action"><a class="btn-text" style="font-size:12px;" onclick="goToEdit('annual-plan',false,5)">查看</a> <span style="font-size:12px;color:#33CC00;">已立项</span></td></tr>
-                <tr><td class="col-checkbox"><input type="checkbox"></td><td><span class="link-cell" onclick="goToEdit('annual-plan',false,6)">2026</span></td><td>金蝶天燕云计算</td><td>敏捷开发实战培训</td><td>12-外聘讲师内训</td><td>12-部门级</td><td>12</td><td>2026年11月</td><td>16</td><td><span class="status-tag pending">未立项</span></td><td><span class="status-tag draft">未锁定</span></td><td class="col-action"><a class="btn-text" style="font-size:12px;" onclick="goToEdit('annual-plan',false,6)">编辑</a> <a class="btn-text" style="font-size:12px;" onclick="goToProjectEdit('plan')">培训立项</a></td></tr>
+                <tr><td class="col-checkbox"><input type="checkbox"></td><td><span class="link-cell" onclick="goToEdit('annual-plan',true,0)">2026</span></td><td>金蝶软件（中国）</td><td>苍穹平台开发实战培训</td><td>11-内部讲师内训</td><td>10-集团级</td><td>45</td><td>2026年9月</td><td>16</td><td><span class="status-tag active">已锁定</span></td><td class="col-action"><a class="btn-text" style="font-size:12px;" onclick="goToEdit('annual-plan',true,0)">查看</a></td></tr>
+                <tr><td class="col-checkbox"><input type="checkbox"></td><td><span class="link-cell" onclick="goToEdit('annual-plan',true,1)">2026</span></td><td>金蝶软件（中国）</td><td>PMP项目管理认证培训</td><td>10-外训</td><td>11-公司级</td><td>20</td><td>2026年10月</td><td>24</td><td><span class="status-tag active">已锁定</span></td><td class="col-action"><a class="btn-text" style="font-size:12px;" onclick="goToEdit('annual-plan',true,1)">查看</a></td></tr>
+                <tr><td class="col-checkbox"><input type="checkbox"></td><td><span class="link-cell" onclick="goToEdit('annual-plan',false,2)">2026</span></td><td>金蝶医疗软件</td><td>新员工入职培训</td><td>11-内部讲师内训</td><td>12-部门级</td><td>30</td><td>2026年9月</td><td>8</td><td><span class="status-tag draft">未锁定</span></td><td class="col-action"><a class="btn-text" style="font-size:12px;" onclick="goToEdit('annual-plan',false,2)">编辑</a></td></tr>
+                <tr><td class="col-checkbox"><input type="checkbox"></td><td><span class="link-cell" onclick="goToEdit('annual-plan',true,3)">2026</span></td><td>金蝶软件（中国）</td><td>中层管理干部沙盘演练</td><td>12-外聘讲师内训</td><td>10-集团级</td><td>15</td><td>2026年12月</td><td>32</td><td><span class="status-tag active">已锁定</span></td><td class="col-action"><a class="btn-text" style="font-size:12px;" onclick="goToEdit('annual-plan',true,3)">查看</a></td></tr>
+                <tr><td class="col-checkbox"><input type="checkbox"></td><td><span class="link-cell" onclick="goToEdit('annual-plan',false,4)">2026</span></td><td>金蝶中间件</td><td>前端技术能力提升</td><td>12-外聘讲师内训</td><td>11-公司级</td><td>18</td><td>2026年11月</td><td>16</td><td><span class="status-tag draft">未锁定</span></td><td class="col-action"><a class="btn-text" style="font-size:12px;" onclick="goToEdit('annual-plan',false,4)">编辑</a></td></tr>
+                <tr><td class="col-checkbox"><input type="checkbox"></td><td><span class="link-cell" onclick="goToEdit('annual-plan',false,5)">2026</span></td><td>金蝶软件（中国）</td><td>信息安全合规培训</td><td>11-内部讲师内训</td><td>11-公司级</td><td>50</td><td>2026年10月</td><td>4</td><td><span class="status-tag draft">未锁定</span></td><td class="col-action"><a class="btn-text" style="font-size:12px;" onclick="goToEdit('annual-plan',false,5)">查看</a></td></tr>
+                <tr><td class="col-checkbox"><input type="checkbox"></td><td><span class="link-cell" onclick="goToEdit('annual-plan',false,6)">2026</span></td><td>金蝶天燕云计算</td><td>敏捷开发实战培训</td><td>12-外聘讲师内训</td><td>12-部门级</td><td>12</td><td>2026年11月</td><td>16</td><td><span class="status-tag draft">未锁定</span></td><td class="col-action"><a class="btn-text" style="font-size:12px;" onclick="goToEdit('annual-plan',false,6)">编辑</a></td></tr>
               </tbody>
             </table>
           </div>
@@ -1493,6 +1646,53 @@ body {
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ========== 培训计划立项列表页 ========== -->
+      <div class="page-content" id="page-plan-project-list">
+        <div class="filter-panel">
+          <div class="filter-row">
+            <span class="filter-label">日历年</span>
+            <input class="filter-input" type="text" placeholder="如 2026" style="width:100px;">
+            <span class="filter-label">公司</span>
+            <input class="filter-input" type="text" placeholder="请输入" style="width:180px;">
+            <span class="filter-label">培训类型</span>
+            <select class="filter-input select-style" style="width:140px;"><option value="">全部</option><option>10-外训</option><option>11-内部讲师内训</option><option>12-外聘讲师内训</option></select>
+            <span class="filter-label">立项状态</span>
+            <select class="filter-input select-style" style="width:120px;"><option value="">全部</option><option>未立项</option><option>已立项</option></select>
+            <button class="btn btn-primary" style="margin-left:auto;">查询</button>
+            <button class="btn btn-secondary">重置</button>
+          </div>
+        </div>
+        <div class="list-toolbar">
+          <div class="toolbar-left">
+            <button class="btn btn-primary" onclick="newRecord('annual-plan')">+ 新增</button>
+            <button class="btn btn-secondary">导出</button>
+            <button class="btn btn-secondary">刷新</button>
+          </div>
+        </div>
+        <div class="list-scroll">
+          <div class="list-page-bar">
+            <div class="lpb-left">共 7 条</div>
+            <div class="lpb-right">
+              <button class="page-btn">&lt;</button><input class="page-input" value="1"><span class="page-info">/ 1 页</span><button class="page-btn">&gt;</button><span class="page-size">20条/页</span>
+            </div>
+          </div>
+          <div class="table-container">
+            <table class="data-table">
+              <thead><tr><th class="col-checkbox"><input type="checkbox"></th><th>日历年</th><th>公司</th><th>培训项目</th><th>培训类型</th><th>培训级别</th><th>计划人数</th><th>计划月份</th><th>培训课时</th><th>立项状态</th><th>锁定状态</th><th class="col-action">操作</th></tr></thead>
+              <tbody>
+                <tr><td class="col-checkbox"><input type="checkbox"></td><td><span class="link-cell" onclick="goToEdit('annual-plan',true,0)">2026</span></td><td>金蝶软件（中国）</td><td>苍穹平台开发实战培训</td><td>11-内部讲师内训</td><td>10-集团级</td><td>45</td><td>2026年9月</td><td>16</td><td><span class="status-tag approved">已立项</span></td><td><span class="status-tag active">已锁定</span></td><td class="col-action"><a class="btn-text" style="font-size:12px;" onclick="goToEdit('annual-plan',true,0)">查看</a> <span style="font-size:12px;color:#33CC00;">已立项</span></td></tr>
+                <tr><td class="col-checkbox"><input type="checkbox"></td><td><span class="link-cell" onclick="goToEdit('annual-plan',true,1)">2026</span></td><td>金蝶软件（中国）</td><td>PMP项目管理认证培训</td><td>10-外训</td><td>11-公司级</td><td>20</td><td>2026年10月</td><td>24</td><td><span class="status-tag approved">已立项</span></td><td><span class="status-tag active">已锁定</span></td><td class="col-action"><a class="btn-text" style="font-size:12px;" onclick="goToEdit('annual-plan',true,1)">查看</a> <span style="font-size:12px;color:#33CC00;">已立项</span></td></tr>
+                <tr><td class="col-checkbox"><input type="checkbox"></td><td><span class="link-cell" onclick="goToEdit('annual-plan',false,2)">2026</span></td><td>金蝶医疗软件</td><td>新员工入职培训</td><td>11-内部讲师内训</td><td>12-部门级</td><td>30</td><td>2026年9月</td><td>8</td><td><span class="status-tag pending">未立项</span></td><td><span class="status-tag draft">未锁定</span></td><td class="col-action"><a class="btn-text" style="font-size:12px;" onclick="goToEdit('annual-plan',false,2)">编辑</a> <a class="btn-text" style="font-size:12px;" onclick="goToProjectEdit('plan')">培训立项</a></td></tr>
+                <tr><td class="col-checkbox"><input type="checkbox"></td><td><span class="link-cell" onclick="goToEdit('annual-plan',true,3)">2026</span></td><td>金蝶软件（中国）</td><td>中层管理干部沙盘演练</td><td>12-外聘讲师内训</td><td>10-集团级</td><td>15</td><td>2026年12月</td><td>32</td><td><span class="status-tag approved">已立项</span></td><td><span class="status-tag active">已锁定</span></td><td class="col-action"><a class="btn-text" style="font-size:12px;" onclick="goToEdit('annual-plan',true,3)">查看</a> <span style="font-size:12px;color:#33CC00;">已立项</span></td></tr>
+                <tr><td class="col-checkbox"><input type="checkbox"></td><td><span class="link-cell" onclick="goToEdit('annual-plan',false,4)">2026</span></td><td>金蝶中间件</td><td>前端技术能力提升</td><td>12-外聘讲师内训</td><td>11-公司级</td><td>18</td><td>2026年11月</td><td>16</td><td><span class="status-tag pending">未立项</span></td><td><span class="status-tag draft">未锁定</span></td><td class="col-action"><a class="btn-text" style="font-size:12px;" onclick="goToEdit('annual-plan',false,4)">编辑</a> <a class="btn-text" style="font-size:12px;" onclick="goToProjectEdit('plan')">培训立项</a></td></tr>
+                <tr><td class="col-checkbox"><input type="checkbox"></td><td><span class="link-cell" onclick="goToEdit('annual-plan',false,5)">2026</span></td><td>金蝶软件（中国）</td><td>信息安全合规培训</td><td>11-内部讲师内训</td><td>11-公司级</td><td>50</td><td>2026年10月</td><td>4</td><td><span class="status-tag approved">已立项</span></td><td><span class="status-tag draft">未锁定</span></td><td class="col-action"><a class="btn-text" style="font-size:12px;" onclick="goToEdit('annual-plan',false,5)">查看</a> <span style="font-size:12px;color:#33CC00;">已立项</span></td></tr>
+                <tr><td class="col-checkbox"><input type="checkbox"></td><td><span class="link-cell" onclick="goToEdit('annual-plan',false,6)">2026</span></td><td>金蝶天燕云计算</td><td>敏捷开发实战培训</td><td>12-外聘讲师内训</td><td>12-部门级</td><td>12</td><td>2026年11月</td><td>16</td><td><span class="status-tag pending">未立项</span></td><td><span class="status-tag draft">未锁定</span></td><td class="col-action"><a class="btn-text" style="font-size:12px;" onclick="goToEdit('annual-plan',false,6)">编辑</a> <a class="btn-text" style="font-size:12px;" onclick="goToProjectEdit('plan')">培训立项</a></td></tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
@@ -2245,6 +2445,24 @@ var listData = {
     {name:'设备费',category:'hire',sort:'6'},
     {name:'其他费用',category:'hire',sort:'7'}
   ],
+  'demand-project': [
+    {name:'苍穹平台开发实战培训',type:'internal-teacher',projType:'T01 - 技术类培训',projSub:'ST01 - 前端技术',needTime:'2026年9月',place:'深圳市南山区科技园金蝶大厦3楼培训室',teacher:'张明、李芳',hours:'16',content:'苍穹平台开发基础、开发规范与最佳实践、数据建模与API设计、开发实战演练',target:'掌握苍穹平台开发技能，能独立完成标准业务模块开发',scope:'产品研发中心后端开发工程师、前端开发工程师，共45人',transform:'培训后完成1个实战项目，由导师评审，通过后纳入项目组',remark:'需准备开发环境',fee:'5000.00'},
+    {name:'PMP项目管理认证培训',type:'external',projType:'T02 - 管理类培训',projSub:'ST03 - 项目管理',needTime:'2026年10月',place:'深圳市南山区科技园培训中心',teacher:'王芳',hours:'24',content:'PMBOK指南、项目整合管理、范围管理、时间管理、成本管理',target:'通过PMP认证考试',scope:'项目经理、产品经理，共20人',transform:'通过PMP认证考试并取得证书',remark:'',fee:'12000.00'},
+    {name:'新员工入职培训需求',type:'internal-teacher',projType:'T04 - 通用素质类',projSub:'',needTime:'2026年9月',place:'金蝶大厦2楼多功能厅',teacher:'人力资源团队',hours:'8',content:'企业文化、规章制度、IT系统使用、信息安全基础',target:'帮助新员工快速融入公司',scope:'2026年新入职员工，共30人',transform:'入职3个月内完成考核',remark:'含午餐',fee:'2000.00'},
+    {name:'前端技术能力提升培训',type:'external-teacher',projType:'T01 - 技术类培训',projSub:'ST01 - 前端技术',needTime:'2026年11月',place:'线上培训',teacher:'外部讲师（待定）',hours:'16',content:'React高级特性、性能优化、微前端架构、TypeScript实战',target:'提升前端开发团队的技术深度',scope:'基础平台部前端工程师，共18人',transform:'完成1个前端组件库贡献',remark:'',fee:'8000.00'},
+    {name:'信息安全合规培训',type:'internal-teacher',projType:'T01 - 技术类培训',projSub:'',needTime:'2026年10月',place:'金蝶大厦3楼培训室',teacher:'刘强',hours:'4',content:'信息安全合规要求、数据分类分级、安全开发规范、应急预案',target:'全员了解信息安全合规要求',scope:'全公司员工，共50人',transform:'通过安全合规考试',remark:'必修',fee:'1000.00'},
+    {name:'中层管理干部沙盘演练',type:'external-teacher',projType:'T02 - 管理类培训',projSub:'ST04 - 领导力',needTime:'2026年12月',place:'外部培训基地',teacher:'外部讲师（待定）',hours:'32',content:'战略规划、团队管理、冲突管理、决策沙盘',target:'提升中层管理干部的综合管理能力',scope:'各部门中层管理干部，共15人',transform:'完成管理改进计划并汇报',remark:'含住宿',fee:'20000.00'},
+    {name:'敏捷开发实战工作坊',type:'external-teacher',projType:'T01 - 技术类培训',projSub:'',needTime:'2026年11月',place:'金蝶大厦2楼',teacher:'外部讲师（待定）',hours:'16',content:'Scrum框架、看板方法、用户故事拆分、持续集成实践',target:'团队掌握敏捷开发方法',scope:'应用产品部开发团队，共12人',transform:'在项目中实施敏捷实践',remark:'',fee:'6000.00'}
+  ],
+  'plan-project': [
+    {year:'2026',company:'金蝶软件（中国）有限公司',projName:'苍穹平台开发实战培训',type:'11',level:'10',desc:'提升苍穹平台开发能力，规范开发流程',target:'后端开发工程师、前端开发工程师',count:'45',month:'2026年9月',teacher:'张明、李芳',hours:'16',status:'已立项',locked:true,reward:'5000',lecture:'8000',review:'2000',external:'0',site:'3000',equipment:'1500',other:'500'},
+    {year:'2026',company:'金蝶软件（中国）有限公司',projName:'PMP项目管理认证培训',type:'10',level:'11',desc:'提升项目管理专业能力',target:'项目经理、产品经理',count:'20',month:'2026年10月',teacher:'王芳',hours:'24',status:'已立项',locked:true,reward:'0',lecture:'0',review:'0',external:'12000',site:'1000',equipment:'500',other:'500'},
+    {year:'2026',company:'金蝶医疗软件科技有限公司',projName:'新员工入职培训',type:'11',level:'12',desc:'帮助新员工快速融入公司',target:'2026年新入职员工',count:'30',month:'2026年9月',teacher:'人力资源团队',hours:'8',status:'未立项',locked:false,reward:'1000',lecture:'2000',review:'500',external:'0',site:'500',equipment:'0',other:'0'},
+    {year:'2026',company:'金蝶软件（中国）有限公司',projName:'中层管理干部沙盘演练',type:'12',level:'10',desc:'提升中层管理干部综合管理能力',target:'各部门中层管理干部',count:'15',month:'2026年12月',teacher:'外部讲师（待定）',hours:'32',status:'已立项',locked:true,reward:'0',lecture:'0',review:'0',external:'15000',site:'3000',equipment:'1500',other:'500'},
+    {year:'2026',company:'金蝶中间件有限公司',projName:'前端技术能力提升',type:'12',level:'11',desc:'提升前端开发团队技术深度',target:'基础平台部前端工程师',count:'18',month:'2026年11月',teacher:'外部讲师（待定）',hours:'16',status:'未立项',locked:false,reward:'0',lecture:'0',review:'0',external:'6000',site:'1000',equipment:'500',other:'0'},
+    {year:'2026',company:'金蝶软件（中国）有限公司',projName:'信息安全合规培训',type:'11',level:'11',desc:'全员了解信息安全合规要求',target:'全公司员工',count:'50',month:'2026年10月',teacher:'刘强',hours:'4',status:'已立项',locked:false,reward:'500',lecture:'1000',review:'0',external:'0',site:'500',equipment:'0',other:'0'},
+    {year:'2026',company:'金蝶天燕云计算股份有限公司',projName:'敏捷开发实战培训',type:'12',level:'12',desc:'团队掌握敏捷开发方法',target:'应用产品部开发团队',count:'12',month:'2026年11月',teacher:'外部讲师（待定）',hours:'16',status:'未立项',locked:false,reward:'0',lecture:'0',review:'0',external:'5000',site:'500',equipment:'500',other:'0'}
+  ],
   'employee-profile': [
     {empId:'EMP2025038',empName:'王雪儿',dept:'产品研发中心',post:'高级产品经理',company:'金蝶软件（中国）',entryDate:'2023-03-15',totalHours:'128',totalCredits:'24'},
     {empId:'EMP2025042',empName:'李明',dept:'基础平台部',post:'后端开发工程师',company:'金蝶软件（中国）',entryDate:'2022-07-01',totalHours:'96',totalCredits:'18'},
@@ -2312,8 +2530,8 @@ function switchPage(name) {
     }
   }
   var targetPage;
-  if (name === 'demand-project') targetPage = 'page-demand-list';
-  else if (name === 'plan-project') targetPage = 'page-annual-plan-list';
+  if (name === 'demand-project') targetPage = 'page-demand-project-list';
+  else if (name === 'plan-project') targetPage = 'page-plan-project-list';
   else targetPage = 'page-' + name + '-list';
   showPage(targetPage);
   resetScroll();
@@ -2980,7 +3198,7 @@ function uploadFile() {
   var empty = tbody.querySelector('.attach-empty');
   if (empty) empty.parentElement.remove();
   var tr = document.createElement('tr');
-  tr.innerHTML = '<td>'+fn+'</td><td>'+fs+'</td><td>'+ts+'</td><td class="col-action"><a class="btn-text" style="font-size:12px;" onclick="showToast(\'预览：'+fn+'（原型演示）\')">预览</a> <a class="btn-text btn-text-danger" style="font-size:12px;" onclick="delAttach(this)">删除</a></td>';
+  tr.innerHTML = '<td>'+fn+'</td><td>'+fs+'</td><td>'+ts+'</td><td class="col-action"><a class="btn-text" style="font-size:12px;" onclick="showToast(\'预览：'+fn+'\')">预览</a> <a class="btn-text btn-text-danger" style="font-size:12px;" onclick="delAttach(this)">删除</a></td>';
   tbody.appendChild(tr);
   showToast('上传成功：' + fn);
 }
